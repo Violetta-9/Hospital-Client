@@ -1,0 +1,67 @@
+<div #startStyle class="navigation-wrap bg-light start-header ms-0 me-0 d-flex start-style">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <a class="position-relative" style="cursor: pointer;">
+            <img class="navbar-brand logo" #headerLogo src="/assets/hospital.png" alt="">
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-label="Toggle navigation" (click)="collapse.toggle()" [attr.aria-expanded]="!isHidden">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div #collapse="ngbCollapse" [ngbCollapse]="isHidden"  class="collapse navbar-collapse justify-content-md-center justify-content-sm-start"
+               id="navbarSupportedContent">
+            <ul class="navbar-nav mt-10px">
+              <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4" ngbDropdown>
+                <a class="nav-link " >Home</a>
+
+              </li>
+              <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                <a class="nav-link" >About us</a>
+              </li>
+
+
+              <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4" ngbDropdown>
+                <span class="nav-link dropdown-toggle" ngbDropdownToggle>Jornal</span>
+                <div class="dropdown-menu" >
+<!--                  <a class="dropdown-item" *ngFor="let menuItem of categories"  routerLink="/category/{{menuItem.id}}">-->
+<!--                    <span>{{menuItem.title}}</span>-->
+<!--                  </a>-->
+                </div>
+              </li>
+
+              <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                <a class="nav-link" > Deliv</a>
+              </li>
+              <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
+                <a class="nav-link" >Contact </a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="me-2 mt-1 mt-md-2 d-inline-flex">
+
+    <a  class="icon-size icon-container me-4" >
+      <i class="fa fa-user-plus"></i>
+
+    </a>
+<!--    <a class="icon-size icon-container me-4"  >-->
+<!--      <i class="fa fa-user-o"></i>-->
+<!--      <div  class="status-circle"></div>-->
+<!--    </a>-->
+    <a class="icon-size icon-container me-4"  >
+      <i class="fa fa-sign-in"></i>
+    </a>
+<!--    <a   class="me-4 icon-size"-->
+<!--       ><i class="fa fa-sign-out"></i></a>-->
+  </div>
+</div>
+
