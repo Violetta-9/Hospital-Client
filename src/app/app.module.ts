@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-
+import {DialogModule} from '@angular/cdk/dialog'
 import {HeaderModule} from "./features/header/components/header.module";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginModalComponent } from './features/user/modals/login-modal/login-modal.component';
@@ -30,7 +30,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

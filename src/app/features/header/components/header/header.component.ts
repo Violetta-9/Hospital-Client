@@ -14,10 +14,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
   openLoginDialog(){
+    console.log("op Work")
     const dialogRef = this.dialog.open(LoginModalComponent, {
       minWidth: '40w',
     });
-
+    console.log("op Work end")
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
 

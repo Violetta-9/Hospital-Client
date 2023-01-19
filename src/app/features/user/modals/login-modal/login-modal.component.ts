@@ -3,6 +3,7 @@ import {EntityDetailsBaseComponent} from "../../../../core/components/abstractio
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
+
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
