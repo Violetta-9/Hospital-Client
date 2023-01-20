@@ -1,0 +1,17 @@
+mat-dialog-content {
+  text-align: center;
+  min-width: 25vw;
+}
+
+
+mat-form-field {
+  display: block;
+}
+.link{
+  color: royalblue;
+  text-decoration: none;
+}
+.link:hover{
+  color: darkmagenta;
+  text-decoration: none;
+}

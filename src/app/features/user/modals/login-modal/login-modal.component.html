@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Login</h1>
+<mat-dialog-content>
+  <form [formGroup]="detailsForm" novalidate>
+    <mat-form-field appearance="fill" [class.mat-form-field-invalid]="false" >
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login"  maxlength="257" required>
+      <mat-error *ngIf="f.login?.errors?.required && submitted">Поле не может быть пустым</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"[class.mat-form-field-invalid]="submitted && f.password?.errors">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="f.password?.errors?.required && submitted">Поле не может быть пустым</mat-error>
+    </mat-form-field>
+    <button class="col-lg-6" mat-raised-button color="primary" type="submit" (click)="save()">Login</button>
+  </form>
+</mat-dialog-content>
+<!--<div class="ms-3 mb-4"><small> If you don't have account, follow <a class="link" (click) = "openRegisterDialog ()"> Registration</a> </small></div>-->
+
