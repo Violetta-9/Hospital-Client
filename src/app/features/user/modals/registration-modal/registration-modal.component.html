@@ -1,0 +1,75 @@
+<h1 mat-dialog-title>Registration</h1>
+<mat-dialog-content>
+  <form [formGroup]="detailsForm" novalidate>
+    <mat-form-field ppearance="fill" [class.mat-form-field-invalid]="submitted && f.login?.errors">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login"  maxlength="257" required>
+      <mat-error *ngIf="submitted && f.login?.errors?.required">Поле не может быть пустым
+      </mat-error>
+      <mat-error *ngIf="submitted && f.login?.errors?.maxlength">Превышает максимальное количество символов</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"[class.mat-form-field-invalid]="submitted && f.firstName?.errors">
+      <mat-label>FirsName</mat-label>
+      <input matInput formControlName="firstName" maxlength="257" required>
+      <mat-error *ngIf="submitted && f.firstName?.errors?.required">Поле не может быть пустым
+      </mat-error>
+      <mat-error *ngIf="submitted && f.firstName?.errors?.maxlength">Превышает максимальное количество символов</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"[class.mat-form-field-invalid]="submitted && f.lastName?.errors">
+      <mat-label>LastName</mat-label>
+      <input matInput formControlName="lastName" maxlength="257" required>
+      <mat-error *ngIf="submitted && f.lastName?.errors?.required">Поле не может быть пустым
+      </mat-error>
+      <mat-error *ngIf="submitted && f.lastName?.errors?.maxlength">Превышает максимальное количество символов</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" [class.mat-form-field-invalid]="submitted && f.email?.errors">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email"   type="email" required>
+
+      <mat-error *ngIf="f.email?.errors?.required && submitted">Поле не может быть пустым</mat-error>
+      <mat-error *ngIf="submitted && f.email?.errors?.email">Введен некорректный email</mat-error>
+      <mat-error *ngIf="submitted && f.email?.errors?.maxlength">Превышает максимальное количество символов</mat-error>
+
+    </mat-form-field>
+    <mat-form-field appearance="fill"[class.mat-form-field-invalid]="submitted && f.password?.errors">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="submitted && f.password?.errors?.notSame">Пароли не сходится
+      </mat-error>
+
+      <mat-error *ngIf="submitted && f.password?.errors?.required">Поле не может быть пустым
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" [class.mat-form-field-invalid]="submitted && f.passwordConfirm?.errors">
+      <mat-label> Confirm Password</mat-label>
+      <input matInput formControlName="passwordConfirm" [type]="hideConfirmPassword ? 'password' : 'text'" required>
+      <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+        <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="submitted && f.passwordConfirm?.errors?.notSame">Пароли не сходятся
+      </mat-error>
+      <mat-error *ngIf="submitted && f.passwordConfirm?.errors?.required">Поле не может быть пустым
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" [class.mat-form-field-invalid]="submitted && f.phoneNumber?.errors">
+      <mat-label>Phone number</mat-label>
+      <input matInput formControlName="phoneNumber" required >
+      <mat-error *ngIf="submitted && f.phoneNumber?.errors?.minLength">Номер телефона не может быть более чем 15 символов
+      </mat-error>
+      <mat-error *ngIf="submitted && f.phoneNumber?.errors?.required">Поле не может быть пустым
+      </mat-error>
+      <mat-error *ngIf="submitted && f.phoneNumber?.errors?.maxlength">Превышает максимальное количество символов</mat-error>
+    </mat-form-field>
+    <button class="col-lg-12" mat-raised-button color="primary" type="submit" (click)="save()">Registretion</button>
+  </form>
+</mat-dialog-content>
+<!--<div class="ms-3 mb-4"><small> Do you already have an account?<a class="link" (click) = "openLoginDialog ()"> Login</a> </small></div>-->
+
