@@ -4,18 +4,33 @@ import { AppComponent } from './app.component';
 import {HeaderModule} from "./features/header/components/header.module";
 import {UserModal} from "./features/user/user.modal";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {HttpClient} from "@angular/common/http";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {registerLocaleData} from "@angular/common";
-import localeEn from '@angular/common/locales/en';
+import {ApiModule as AuthorizationApiModule, BASE_PATH as AUTHORIZATION_BASE_PATH} from "./core/services/swagger-gen/authorization"
+import {environment} from "../environments/environment";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ErrorInterceptor} from "./core/interceptors/global-http-error-interceptor";
 
-registerLocaleData(localeEn, 'en');
+import {RegistrationUserFormModal} from "./features/form/registration-user-form/registration-user-form.modal";
+import { AppRoutingModule } from './app-routing.module';
+import { CreateDoctorComponent } from './pages/doctor/create-doctor/create-doctor.component';
+import { CreateReceptionistComponent } from './pages/receptionist/create-receptionist/create-receptionist.component';
+import { CreateOfficeComponent } from './pages/office/create-office/create-office.component';
+import {OfficeModal} from "./pages/office/office.modal";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { CreateServiceComponent } from './pages/services/create-service/create-service.component';
+import {ServiceModal} from "./pages/services/service.modal";
+
+
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    CreateDoctorComponent,
+    CreateReceptionistComponent,
 
 
 
@@ -23,25 +38,23 @@ registerLocaleData(localeEn, 'en');
   imports: [
     BrowserModule,
     HeaderModule,
+    OfficeModal,
     UserModal,
+    RegistrationUserFormModal,
     NgbModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      useDefaultLang: true,
-      defaultLanguage: "en"
-    })
+    AuthorizationApiModule,
+    AppRoutingModule,
+    ServiceModal,
+
 
 
   ],
-  providers: [],
+  providers: [
+    {provide: AUTHORIZATION_BASE_PATH, useValue: environment.authorizationUri},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule  { }
-export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
-  return new TranslateHttpLoader(http, './assets/locale/', '.json');
-}
+
 

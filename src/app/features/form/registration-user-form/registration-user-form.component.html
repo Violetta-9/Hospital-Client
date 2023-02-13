@@ -1,0 +1,163 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
+  <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.firstName?.errors">
+        <mat-label>FirstName</mat-label>
+        <input matInput formControlName="firstName" maxlength="257" required>
+        <mat-error *ngIf="submitted && f.firstName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.firstName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.lastName?.errors">
+        <mat-label>LastName</mat-label>
+        <input matInput formControlName="lastName">
+        <mat-error *ngIf="submitted && f.lastName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.lastName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline"[class.mat-form-field-invalid]="submitted && f.middleName?.errors">
+        <mat-label>MiddleName</mat-label>
+        <input matInput formControlName="middleName">
+        <mat-error *ngIf="submitted && f.middleName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.middleName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline"   [class.mat-form-field-invalid]="submitted && f.birthDate?.errors">
+        <mat-label>Choose a date of birhday</mat-label>
+        <input matInput formControlName="birthDate" [matDatepicker]="datepicker" required>
+        <button mat-icon-button matSuffix >
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        </button>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+        <mat-error *ngIf="submitted && f.birthDate?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.email?.errors">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="submitted && f.email?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.email?.errors?.email">{{'ERROR.INCORRECTEMAIL'|translate}}</mat-error>
+
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.phoneNumber?.errors">
+        <mat-label>PhoneNumber</mat-label>
+        <input matInput formControlName="phoneNumber">
+        <mat-error *ngIf="submitted && f.phoneNumber?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.phoneNumber?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.office?.errors" >
+        <mat-label>Office</mat-label>
+        <mat-select  formControlName="office" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.office?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="userRole==='doctor'" class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.specialization?.errors">
+        <mat-label>Specialization</mat-label>
+        <mat-select formControlName="specialization" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.specialization?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+
+      </mat-form-field>
+    </div>
+
+
+
+    <div *ngIf="userRole=='doctor'" class="col-lg-3" >
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.status?.errors">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.status?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-lg-9 row" >
+      <div class="col-lg-3">
+        <mat-form-field appearance="outline" >
+          <mat-label>Choosea photo</mat-label>
+          <button mat-icon-button matSuffix >
+            <mat-icon matSuffix>photo_camera</mat-icon>
+          </button>
+          <ngx-mat-file-input formControlName="file" (change)="fileChangeEvent($event)">
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-5">
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="false"
+          [roundCropper]="true"
+          [resizeToWidth]="0"
+
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady()"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+      </div>
+      <div class="col-lg-3">
+        <img class="circle-img" [src]="croppedImage" />
+      </div>
+
+    </div>
+    <div class="col-lg-12">
+      <button class="col-lg-2 btn-center mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="save()">Create</button>
+    </div>
+
+
+
+  </form>
+
+</div>
+
+
+
+
+<!--*ngIf="getUserRole()=='doctor'"-->

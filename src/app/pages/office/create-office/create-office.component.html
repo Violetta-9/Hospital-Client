@@ -1,0 +1,38 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
+  <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.address?.errors">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" maxlength="257" required>
+        <mat-error *ngIf="submitted && f.address?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.address?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.registryPhoneNumber?.errors">
+        <mat-label>Registry PhoneNumber</mat-label>
+        <input matInput formControlName="registryPhoneNumber">
+        <mat-error *ngIf="submitted && f.registryPhoneNumber?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.registryPhoneNumber?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-lg-12">
+      <button class="col-lg-2 btn-center mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="save()">Create</button>
+    </div>
+
+
+
+  </form>
+
+</div>
+
+
+

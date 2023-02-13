@@ -1,0 +1,16 @@
+{
+  "HEADER": {
+    "HOME": "Home",
+    "OFFICES": "Offices",
+    "ABOUTUS": "About us",
+    "SERVICES": "Services",
+    "DOCTORS": "Doctors"
+  },
+  "ERROR": {
+    "REQUIRED": "The field cannot be empty",
+    "MAXLENGTH": "Exceeds the maximum number of characters",
+    "INCORRECTEMAIL": "Invalid email entered",
+    "NOTMATHPASSWORD": "Passwords don't match"
+  }
+
+}

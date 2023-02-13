@@ -9,6 +9,10 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {RegistrationModalComponent} from "./modals/registration-modal/registration-modal.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {ToastrModule} from "ngx-toastr";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 
@@ -17,18 +21,21 @@ import {RegistrationModalComponent} from "./modals/registration-modal/registrati
     LoginModalComponent,
     RegistrationModalComponent
   ],
-  imports: [
+    imports: [
+        MatNativeDateModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        NgbModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        TranslateModule,
 
-    BrowserAnimationsModule,
-    NgbModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
 
-
-  ],
+    ],
   exports: [
    LoginModalComponent
   ],
