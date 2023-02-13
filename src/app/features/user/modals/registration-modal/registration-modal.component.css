@@ -15,3 +15,6 @@ mat-form-field {
   color: darkmagenta;
   text-decoration: none;
 }
+example-form-field {
+  margin-right: 20px;
+}
