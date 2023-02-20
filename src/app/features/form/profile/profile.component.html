@@ -1,0 +1,86 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
+
+  <div class="col-lg-2 me-lg-3">
+    <img src="/assets/bg.jpg"  alt="Avatar">
+  </div>
+
+  <div class="col-lg-10 row">
+
+    <div class="col-lg-4 mt-lg-3 ">
+    <div class="h5">fvjhfdnjdhdjhbfvdhgdhsgfvdhhvgsd</div>
+  </div>
+    <div class="col-lg-8 mt-lg-1 ">
+      <form [formGroup]="statusGroup">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Status" formControlName="status">
+          <mat-option [value]="1">option
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </form>
+    </div>
+
+    <div class="col-lg-3 row share ">
+      <div class="col-lg-2">
+        <i class="fa fa-briefcase" aria-hidden="true"></i>
+      </div>
+
+      <div class="col-lg-9 row">
+        <div class="title">Specialization</div>
+        <div>jdjd</div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 row share ">
+      <div class="col-lg-2">
+        <i class="fa fa-map-marker" aria-hidden="true"></i>
+      </div>
+
+      <div class="col-lg-9 row">
+        <div class="title">Location</div>
+        <div>jdjd</div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 row share ">
+      <div class="col-lg-2">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </div>
+
+      <div class="col-lg-9 row">
+        <div class="title">Year start of career</div>
+        <div>jdjd</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<mat-expansion-panel class="mt-lg-4" (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="h6">
+      Personal information
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+<app-form-update-personal-info></app-form-update-personal-info>
+
+</mat-expansion-panel>
+
+
+
+<mat-expansion-panel  (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="h6">
+    Work information
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+<app-form-update-work-info></app-form-update-work-info>
+</mat-expansion-panel>
+
+
+
+

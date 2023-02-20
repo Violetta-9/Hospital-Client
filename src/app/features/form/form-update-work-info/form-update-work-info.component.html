@@ -1,0 +1,35 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5">
+  <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+    <div  class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.specialization?.errors">
+        <mat-label>Specialization</mat-label>
+        <mat-select formControlName="specialization" required [disabled]="editWorkInfo">
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.specialization?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.office?.errors" >
+        <mat-label>Office</mat-label>
+        <mat-select  formControlName="office" required [disabled]="editWorkInfo">
+          <mat-option value="option" >Option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.office?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-3">
+      <button class="col-lg-6" mat-raised-button color="warn" (click)="editWorkInfo=!editWorkInfo">Edit</button>
+    </div>
+
+    <div *ngIf="!editWorkInfo" class="col-lg-12">
+      <button class="col-lg-2  mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="save()">Update</button>
+    </div>
+
+
+  </form>
+</div>
