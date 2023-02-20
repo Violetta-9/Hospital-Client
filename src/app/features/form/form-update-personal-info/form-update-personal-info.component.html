@@ -1,0 +1,83 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
+  <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.firstName?.errors">
+        <mat-label>FirstName</mat-label>
+        <input matInput formControlName="firstName" maxlength="257" required [readonly]="editPersonalInfo">
+        <mat-error *ngIf="submitted && f.firstName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.firstName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.lastName?.errors">
+        <mat-label>LastName</mat-label>
+        <input matInput formControlName="lastName" [readonly]="editPersonalInfo">
+        <mat-error *ngIf="submitted && f.lastName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.lastName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline"[class.mat-form-field-invalid]="submitted && f.middleName?.errors">
+        <mat-label>MiddleName</mat-label>
+        <input matInput formControlName="middleName" [readonly]="editPersonalInfo">
+        <mat-error *ngIf="submitted && f.middleName?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.middleName?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline"   [class.mat-form-field-invalid]="submitted && f.birthDate?.errors">
+        <mat-label>Choose a date of birhday</mat-label>
+        <input matInput formControlName="birthDate" [matDatepicker]="datepicker" required [readonly]="editPersonalInfo">
+        <button *ngIf="!editPersonalInfo" mat-icon-button matSuffix >
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        </button>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+        <mat-error *ngIf="submitted && f.birthDate?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.email?.errors">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" [readonly]="editPersonalInfo">
+        <mat-error *ngIf="submitted && f.email?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.email?.errors?.email">{{'ERROR.INCORRECTEMAIL'|translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.phoneNumber?.errors">
+        <mat-label>PhoneNumber</mat-label>
+        <input matInput formControlName="phoneNumber" [readonly]="editPersonalInfo">
+        <mat-error *ngIf="submitted && f.phoneNumber?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.phoneNumber?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-3">
+      <button class="col-lg-6" mat-raised-button color="warn" (click)="editPersonalInfo=!editPersonalInfo">Edit</button>
+    </div>
+
+    <div *ngIf="!editPersonalInfo" class="col-lg-12">
+      <button class="col-lg-2  mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="save()">Update</button>
+    </div>
+  </form>
+</div>

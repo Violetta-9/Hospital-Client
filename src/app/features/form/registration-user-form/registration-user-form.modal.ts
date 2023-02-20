@@ -13,13 +13,16 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
 import {CommonModule} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
 import {TranslateModule} from "@ngx-translate/core";
+import {FormUpdatePersonalInfoComponent} from "../form-update-personal-info/form-update-personal-info.component";
+import {FormUpdateWorkInfoComponent} from "../form-update-work-info/form-update-work-info.component";
 
 
 
 
 @NgModule({
   declarations: [
-    RegistrationUserFormComponent
+    RegistrationUserFormComponent,
+
   ],
   imports: [
     MatFormFieldModule,
@@ -39,6 +42,7 @@ import {TranslateModule} from "@ngx-translate/core";
   ],
   exports: [
     RegistrationUserFormComponent,
+
   ],
 })
 export class RegistrationUserFormModal {
