@@ -20,6 +20,14 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { CreateServiceComponent } from './pages/services/create-service/create-service.component';
 import {ServiceModal} from "./pages/services/service.modal";
+import { ProfileComponent } from './features/form/profile/profile.component';
+import {ProfileModal} from "./features/form/profile/profile.modal";
+import {
+  FormUpdatePersonalInfoComponent
+} from "./features/form/form-update-personal-info/form-update-personal-info.component";
+import {FormUpdatePersonalInfoModal} from "./features/form/form-update-personal-info/form-update-personal-info.modal";
+import {FormUpdateWorkInfoModal} from "./features/form/form-update-work-info/form-update-work-info-modal";
+
 
 
 
@@ -34,6 +42,7 @@ import {ServiceModal} from "./pages/services/service.modal";
 
 
 
+
   ],
   imports: [
     BrowserModule,
@@ -45,6 +54,10 @@ import {ServiceModal} from "./pages/services/service.modal";
     AuthorizationApiModule,
     AppRoutingModule,
     ServiceModal,
+    ProfileModal,
+    FormUpdatePersonalInfoModal,
+    FormUpdateWorkInfoModal
+
 
 
 
