@@ -18,6 +18,8 @@
         <mat-error *ngIf="submitted && f.price?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>
         <mat-error *ngIf="submitted && f.price?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+        <mat-error *ngIf="submitted && f.price?.errors?.pattern">{{'ERROR.NOTNUMBER' | translate}}
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -32,6 +34,7 @@
         </mat-select>
         <mat-error *ngIf="submitted && f.serviceCategoryId?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>
+
       </mat-form-field>
     </div>
 

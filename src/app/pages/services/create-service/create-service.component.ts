@@ -19,7 +19,7 @@ export class CreateServiceComponent extends EntityDetailsBaseComponent implement
   private _createForm() {
     this.detailsForm = new FormGroup({
         title: new FormControl('', [Validators.maxLength(100), Validators.required]),
-        price: new FormControl('', [Validators.maxLength(10), Validators.required]),
+        price: new FormControl('', [Validators.maxLength(10), Validators.required,Validators.pattern("^[0-9]*$")]),
         serviceCategoryId: new FormControl('', [ Validators.required]),
 
       }
@@ -27,6 +27,7 @@ export class CreateServiceComponent extends EntityDetailsBaseComponent implement
   }
 
   protected saveInternal(): any {
+    console.log(this.detailsForm.get("serviceCategoryId").errors)
   }
 
 }
