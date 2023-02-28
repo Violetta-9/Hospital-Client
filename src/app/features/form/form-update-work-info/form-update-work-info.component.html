@@ -1,22 +1,29 @@
 <div class="ms-lg-5 ps-lg-5 mt-lg-5">
   <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
 
-    <div  class="col-lg-3">
+    <div *ngIf="userRole!=undefined && userRole=='doctor'"  class="col-lg-3">
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.specialization?.errors">
         <mat-label>Specialization</mat-label>
-        <mat-select formControlName="specialization" required [disabled]="editWorkInfo">
-          <mat-option value="option">Option</mat-option>
+        <mat-select formControlName="specializationId" required [disabled]="editWorkInfo">
+
+          <mat-option *ngFor="let spec of specialization" [value]="spec.id"   >
+            {{spec.title}}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.specialization?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>
       </mat-form-field>
     </div>
 
-    <div class="col-lg-3">
+    <div  class="col-lg-3">
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.office?.errors" >
         <mat-label>Office</mat-label>
-        <mat-select  formControlName="office" required [disabled]="editWorkInfo">
-          <mat-option value="option" >Option</mat-option>
+        <mat-select  formControlName="officeId" required [disabled]="editWorkInfo"  >
+
+          <mat-option *ngFor="let office of offices" [value]="office.id"   >
+            {{office.address}}
+          </mat-option>
+
         </mat-select>
         <mat-error *ngIf="submitted && f.office?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>

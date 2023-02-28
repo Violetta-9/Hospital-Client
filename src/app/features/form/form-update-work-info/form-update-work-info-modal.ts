@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {FormUpdateWorkInfoComponent} from "./form-update-work-info.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {TranslateModule} from "@ngx-translate/core";
@@ -25,7 +25,8 @@ import {CommonModule} from "@angular/common";
     MatSelectModule,
     TranslateModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    FormsModule
 
 
   ],
