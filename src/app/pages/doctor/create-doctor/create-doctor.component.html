@@ -1,1 +1,3 @@
-<app-registration-user-form [userRole]="userRole"></app-registration-user-form>
+<h1 class="text-center">Create Doctor</h1>
+<app-registration-user-form [userRole]="userRole" (registerData)="createDoctor($event)" ></app-registration-user-form>
+
