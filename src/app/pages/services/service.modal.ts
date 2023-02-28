@@ -9,13 +9,15 @@ import {TranslateModule} from "@ngx-translate/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
+import {ServicePageComponent} from "./service-page/service-page.component";
+import {MatRadioModule} from "@angular/material/radio";
 
 
 
 
 @NgModule({
   declarations: [
-    CreateServiceComponent
+    CreateServiceComponent,ServicePageComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -24,12 +26,13 @@ import {MatButtonModule} from "@angular/material/button";
     TranslateModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatRadioModule
 
 
   ],
   exports: [
-    CreateServiceComponent,
+    CreateServiceComponent,ServicePageComponent
   ],
 })
 export class ServiceModal {

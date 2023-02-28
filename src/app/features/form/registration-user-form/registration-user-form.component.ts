@@ -1,10 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
-import {ThemePalette} from "@angular/material/core";
+
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {emailValidators} from "../../../shared/validators/emailValidator";
-import {passwordValidator} from "../../../shared/validators/passwordValidator";
-import {ImageCroppedEvent} from "ngx-image-cropper";
+
+import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
+import {AllOfficesDto, OfficeService} from "../../../core/services/swagger-gen/office";
+import {SpecializationListDTO, SpecializationService} from "../../../core/services/swagger-gen/specialization";
+import {filter} from "rxjs";
+import {StatusDTO, StatusService} from "../../../core/services/swagger-gen/profile";
+
 
 @Component({
   selector: 'app-registration-user-form',
@@ -13,18 +18,33 @@ import {ImageCroppedEvent} from "ngx-image-cropper";
 })
 export class RegistrationUserFormComponent extends EntityDetailsBaseComponent implements OnInit {
   @Input() userRole;
-constructor() {
-  super();
-  this._createForm();
-}
+  @Output() registerData=new EventEmitter();
+  public fileToReturn;
+  public officeList:AllOfficesDto[];
+  public specializations=[]
+  public statuses:StatusDTO[]
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
+  constructor(public officeService:OfficeService,public specializationService:SpecializationService,public statusService:StatusService ) {
+    super();
+    this.getAllOffice();
+    this.getStatus();
+    this.getAllSpecialization();
+
+
+  }
 
   ngOnInit(): void {
+    this._createForm()
   }
 
-  protected saveInternal(): any {
-    console.log(this.detailsForm.getRawValue());
-  }
+
+
+
+
   private _createForm() {
+
     this.detailsForm = new FormGroup({
         firstName: new FormControl('', [Validators.maxLength(256), Validators.required]),
         lastName: new FormControl('', [Validators.maxLength(256), Validators.required]),
@@ -32,24 +52,27 @@ constructor() {
         birthDate: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.maxLength(256), Validators.required, emailValidators()]),
         phoneNumber: new FormControl('', [Validators.maxLength(15), Validators.required]),
-        specialization: new FormControl('', [ Validators.required]),
+        specialization: new FormControl(this.userRole=='receptionist'?0:'', [ Validators.required]),
         office: new FormControl('', [ Validators.required]),
-        status: new FormControl('', [ Validators.required]),
+        status: new FormControl(this.userRole=='receptionist'?0:'', [ Validators.required]),
         file: new FormControl(''),
       }
-      )
+    )
   }
 
-
-
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
+    this.fileToReturn = this.base64ToFile(
+      event.base64,
+      this.imageChangedEvent.target.files[0].name,
+    )
+
+
+
   }
   imageLoaded() {
     // show cropper
@@ -61,4 +84,45 @@ constructor() {
     // show message
   }
 
+  private getAllOffice() {
+    this.officeService.getAllOffices().subscribe(x=>this.officeList=x);
+
+  }
+
+  private getAllSpecialization() {
+    this.specializationService.getAllSpecialization().subscribe(x=>{
+      for (const item of x) {
+        if(item.isActive){
+          this.specializations.push(item)
+        }
+      }
+    })
+  }
+
+  private getStatus() {
+    this.statusService.getAllStatus().subscribe(x=>this.statuses=x);
+  }
+
+  base64ToFile(data, filename) {
+
+    const arr = data.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  protected saveInternal(): any {
+    console.log("tute")
+    console.log(this.detailsForm.getRawValue());
+    this.detailsForm.get('file').setValue(this.fileToReturn);
+    this.registerData.emit(this.detailsForm.getRawValue());
+
+  }
 }

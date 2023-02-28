@@ -27,10 +27,10 @@
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.serviceCategoryId?.errors">
         <mat-label>Category</mat-label>
         <mat-select formControlName="serviceCategoryId" required>
-<!--          <mat-option *ngFor="let category of categories" [value]="category.id"   >-->
-<!--            {{category.title}}-->
-<!--          </mat-option>-->
-          <mat-option value="option">Option</mat-option>
+
+          <mat-option *ngFor="let service of servicesCategoriesList" [value]="service.id"   >
+            {{service.title}}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.serviceCategoryId?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>

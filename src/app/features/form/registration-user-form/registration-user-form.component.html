@@ -74,15 +74,16 @@
       </mat-form-field>
     </div>
 
-    <div class="col-lg-3">
+    <div  class="col-lg-3">
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.office?.errors" >
         <mat-label>Office</mat-label>
         <mat-select  formControlName="office" required>
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let office of officeList" [value]="office.id"   >
+            {{office.address}}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.office?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>
-
 
       </mat-form-field>
     </div>
@@ -91,7 +92,9 @@
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.specialization?.errors">
         <mat-label>Specialization</mat-label>
         <mat-select formControlName="specialization" required>
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let specialization of specializations" [value]="specialization.id"   >
+            {{specialization.title}}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.specialization?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>
@@ -106,7 +109,9 @@
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.status?.errors">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" required>
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status.id"   >
+            {{status.title}}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.status?.errors?.required">{{'ERROR.REQUIRED' | translate}}
         </mat-error>

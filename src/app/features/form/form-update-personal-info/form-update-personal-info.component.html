@@ -33,7 +33,7 @@
     </div>
 
 
-    <div class="col-lg-3">
+    <div   class="col-lg-3">
       <mat-form-field appearance="outline"   [class.mat-form-field-invalid]="submitted && f.birthDate?.errors">
         <mat-label>Choose a date of birhday</mat-label>
         <input matInput formControlName="birthDate" [matDatepicker]="datepicker" required [readonly]="editPersonalInfo">
@@ -53,17 +53,8 @@
       </mat-form-field>
     </div>
 
-    <div class="col-lg-3">
-      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.email?.errors">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" [readonly]="editPersonalInfo">
-        <mat-error *ngIf="submitted && f.email?.errors?.required">{{'ERROR.REQUIRED' | translate}}
-        </mat-error>
-        <mat-error *ngIf="submitted && f.email?.errors?.email">{{'ERROR.INCORRECTEMAIL'|translate}}</mat-error>
-      </mat-form-field>
-    </div>
 
-    <div class="col-lg-3">
+    <div  class="col-lg-3">
       <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.phoneNumber?.errors">
         <mat-label>PhoneNumber</mat-label>
         <input matInput formControlName="phoneNumber" [readonly]="editPersonalInfo">

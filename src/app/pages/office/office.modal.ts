@@ -9,28 +9,40 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatInputModule} from "@angular/material/input";
 import {AppRoutingModule} from "../../app-routing.module";
 import {CommonModule} from "@angular/common";
+import {HomeOfficePageComponent} from "./home-office-page/home-office-page.component";
+import {MatTableModule} from "@angular/material/table";
+import {MatRadioModule} from "@angular/material/radio";
+import {OfficePageComponent} from "./office-page/office-page.component";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
 
 @NgModule({
   declarations: [
-    CreateOfficeComponent
+    CreateOfficeComponent,
+    HomeOfficePageComponent,
+    OfficePageComponent
   ],
-  imports: [
-    ReactiveFormsModule,
-    TranslateModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatFormFieldModule,
-    MatInputModule,
-    AppRoutingModule,
-    CommonModule,
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        AppRoutingModule,
+        CommonModule,
+        MatTableModule,
+        MatRadioModule,
+        MatExpansionModule,
 
 
-  ],
+    ],
   exports: [
     CreateOfficeComponent,
+    HomeOfficePageComponent,
+    OfficePageComponent
   ],
 })
 export class OfficeModal {

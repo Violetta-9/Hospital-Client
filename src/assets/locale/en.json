@@ -12,6 +12,10 @@
     "INCORRECTEMAIL": "Invalid email entered",
     "NOTMATHPASSWORD": "Passwords don't match",
     "NOTNUMBER": "This field must contain only numbers"
+  },
+  "SETTINGS": {
+    "PATH": "http://127.0.0.1:10000/devstoreaccount1/hospital-documents/"
   }
+
 
 }

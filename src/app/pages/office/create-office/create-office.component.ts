@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {emailValidators} from "../../../shared/validators/emailValidator";
 import {ThemePalette} from "@angular/material/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {OfficeService} from "../../../core/services/swagger-gen/office";
+
 
 @Component({
   selector: 'app-create-office',
@@ -11,7 +12,7 @@ import {ThemePalette} from "@angular/material/core";
 })
 export class CreateOfficeComponent extends EntityDetailsBaseComponent implements OnInit {
   color: ThemePalette = 'primary';
-  constructor() {
+  constructor(public officeService:OfficeService) {
     super();
     this._createForm()
   }
@@ -29,6 +30,7 @@ export class CreateOfficeComponent extends EntityDetailsBaseComponent implements
   }
 
   protected saveInternal(): any {
+    this.officeService.createOffice(this.detailsForm.getRawValue()).subscribe(x=>console.log(x));
   }
 
 }

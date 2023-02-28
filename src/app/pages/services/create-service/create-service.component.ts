@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ServiceCategoriesDTO, ServiceService} from "../../../core/services/swagger-gen/service";
 
 @Component({
   selector: 'app-create-service',
@@ -8,9 +9,10 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./create-service.component.css']
 })
 export class CreateServiceComponent extends EntityDetailsBaseComponent implements OnInit {
-
-  constructor() {
+public servicesCategoriesList:ServiceCategoriesDTO[]
+  constructor(public service:ServiceService) {
     super();
+this.getServicesCategories();
     this._createForm()
   }
 
@@ -28,6 +30,10 @@ export class CreateServiceComponent extends EntityDetailsBaseComponent implement
 
   protected saveInternal(): any {
     console.log(this.detailsForm.get("serviceCategoryId").errors)
+    this.service.createService(this.detailsForm.getRawValue()).subscribe(x=>console.log(x));
   }
 
+  private getServicesCategories() {
+    this.service.getServiceCategories().subscribe(x=>this.servicesCategoriesList=x)
+  }
 }
