@@ -1,1 +1,3 @@
-<app-registration-user-form [userRole]="userRole"></app-registration-user-form>
+<h1 class="text-center">Create Receptionist</h1>
+<app-registration-user-form [userRole]="userRole" (registerData)="createReceptionist($event)" ></app-registration-user-form>
+
