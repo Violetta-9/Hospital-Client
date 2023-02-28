@@ -1,0 +1,61 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
+  <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.title?.errors">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"  required [readonly]="editInfo">
+        <mat-error *ngIf="submitted && f.title?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.title?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="col-lg-3 ">
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.price?.errors">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price" [readonly]="editInfo">
+        <mat-error *ngIf="submitted && f.price?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.price?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+        <mat-error *ngIf="submitted && f.price?.errors?.pattern">{{'ERROR.NOTNUMBER' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div  class="col-lg-3" >
+      <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.serviceCategoryId?.errors">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="serviceCategoryId" required [disabled]="editInfo">
+
+          <mat-option *ngFor="let service of servicesCategoriesList" [value]="service.id"   >
+            {{service.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.serviceCategoryId?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+        </mat-error>
+
+      </mat-form-field>
+    </div>
+
+    <div  class="col-lg-2 mt-lg-1 ">
+      <mat-radio-group  aria-label="Select an option" class="row" [value]="serviceStatus?.toString()" (change)="updateStatus($event)" >
+        <mat-radio-button value="true"  color="primary" >Active</mat-radio-button>
+        <mat-radio-button class="mt-lg-1" value="false" color="warn">Inactive</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="col-lg-3 mt-lg-3">
+      <button class="col-lg-6" mat-raised-button color="warn" (click)="editInfo=!editInfo">Edit</button>
+    </div>
+
+    <div *ngIf="!editInfo" class="col-lg-3  mt-lg-3">
+      <button class="col-lg-6 " mat-raised-button color="primary" type="submit" (click)="save()">Update</button>
+    </div>
+
+  </form>
+
+</div>
+
+
+

@@ -1,0 +1,84 @@
+<div class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
+
+  <div class="col-lg-2 me-lg-3">
+    <img src="/assets/buildings.png">
+
+  </div>
+
+    <div class="col-lg-10 mt-lg-5 row">
+      <div  class="col-lg-3 row share ">
+        <div class="col-lg-2">
+          <i class="fa fa-briefcase" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-lg-9 row">
+          <div class="title">Address</div>
+          <div>{{office.address}}</div>
+        </div>
+      </div>
+
+      <div  class="col-lg-4 row share ">
+        <div class="col-lg-2">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-lg-9 row">
+          <div class="title">Registry Phone Number</div>
+          <div>{{office.registryPhoneNumber}}</div>
+        </div>
+      </div>
+
+      <div  class="col-lg-2 mt-lg-1 ">
+        <mat-radio-group  aria-label="Select an option" class="row" [value]="office.isActive.toString()" (change)="updateStatus($event)" >
+          <mat-radio-button value="true"  color="primary" >Active</mat-radio-button>
+          <mat-radio-button class="mt-lg-1" value="false" color="warn">Inactive</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+<mat-expansion-panel class="mt-lg-4" (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title class="h6">
+      Office information
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
+    <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
+
+      <div class="col-lg-3 ">
+        <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.firstName?.errors">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address" maxlength="257" required [readonly]="editInfo">
+          <mat-error *ngIf="submitted && f.address?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+          </mat-error>
+          <mat-error *ngIf="submitted && f.address?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-3 ">
+        <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.lastName?.errors">
+          <mat-label>Registry phone number</mat-label>
+          <input matInput formControlName="registryPhoneNumber" [readonly]="editInfo">
+          <mat-error *ngIf="submitted && f.registryPhoneNumber?.errors?.required">{{'ERROR.REQUIRED' | translate}}
+          </mat-error>
+          <mat-error *ngIf="submitted && f.registryPhoneNumber?.errors?.maxlength">{{'ERROR.MAXLENGTH' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3">
+        <button class="col-lg-6" mat-raised-button color="warn" (click)="editInfo=!editInfo">Edit</button>
+      </div>
+
+      <div *ngIf="!editInfo" class="col-lg-12">
+        <button class="col-lg-2  mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="save()">Update</button>
+      </div>
+    </form>
+  </div>
+</mat-expansion-panel>
