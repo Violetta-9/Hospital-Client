@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { DoctorService } from './api/doctor.service';
+import { FilterService } from './api/filter.service';
 import { PatientService } from './api/patient.service';
 import { PhotoService } from './api/photo.service';
 import { ReceptionistService } from './api/receptionist.service';
@@ -16,6 +17,7 @@ import { UpdateService } from './api/update.service';
   exports:      [],
   providers: [
     DoctorService,
+    FilterService,
     PatientService,
     PhotoService,
     ReceptionistService,
