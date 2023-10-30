@@ -1,0 +1,59 @@
+<mat-accordion >
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h3 class="filter-title">Filter</h3>
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon class="filter">settings</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <form [formGroup]="detailsForm" class="col-12">
+
+        <div formGroupName="fullName" class="col-12 row">
+          <div class="col-12 title" >Full name:</div>
+
+          <mat-form-field class="col-12 col-md-6">
+            <input type="text" formControlName="firstName" matInput  placeholder="First name">
+          </mat-form-field>
+
+          <mat-form-field class="col-12 col-md-6">
+            <input type="text" formControlName="lastName" matInput placeholder="Last name">
+          </mat-form-field>
+
+          <mat-form-field class="col-12 col-md-6">
+            <input type="text" formControlName="middleName" matInput placeholder="Middle name">
+          </mat-form-field>
+
+        </div>
+
+
+
+        <ng-select formControlName="specializationId"
+                   placeholder="Specialization"
+                   dropdownPosition="top"
+                   bindLabel="name" bindValue="id"
+                   class="col-12 pb-0 mt-2" [clearable]="false"
+                   [items]="[
+        {  id : 1 ,  name : 'Вольво'  } ,
+          {  id : 2 ,  name : 'Saab'  } ,
+          {  id : 3 ,  name : 'Opel'  } ,
+          {  id : 4 ,  name : 'Audi' } ,
+          ]">
+
+        </ng-select>zx
+
+        <ng-select formControlName="officeId"
+                   placeholder="Office"
+                   dropdownPosition="top"   class="col-12 pb-0 mt-2" [clearable]="false">
+          <ng-option *ngFor="let car of a" [disabled]="car.isActive" [value]="car.id">{{car.name}}</ng-option>
+        </ng-select>
+
+
+        <button  class="col-12 mt-4 white-btn" mat-raised-button (click)="this.clearFilters()" >Clear</button>
+        <button class="col-12 mt-2 dark-btn" mat-raised-button (click)="save()">Find</button>
+      </form>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
