@@ -11,5 +11,12 @@
  */
 
 export interface Body5 { 
-    accountId?: string;
+    firstName?: string;
+    lastName?: string;
+    middleName?: string;
+    email?: string;
+    phoneNumber?: string;
+    birthDate?: Date;
+    officeId?: number;
+    file?: Blob;
 }

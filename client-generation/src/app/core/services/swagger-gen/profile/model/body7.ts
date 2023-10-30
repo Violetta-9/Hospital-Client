@@ -10,13 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface Body5 { 
-    firstName?: string;
-    lastName?: string;
-    middleName?: string;
-    email?: string;
-    phoneNumber?: string;
-    birthDate?: Date;
+export interface Body7 { 
+    accountId?: string;
     officeId?: number;
-    file?: Blob;
 }

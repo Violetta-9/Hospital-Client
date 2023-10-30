@@ -12,5 +12,4 @@
 
 export interface Body6 { 
     accountId?: string;
-    officeId?: number;
 }
