@@ -1,5 +1,7 @@
 export * from './doctor.service';
 import { DoctorService } from './doctor.service';
+export * from './filter.service';
+import { FilterService } from './filter.service';
 export * from './patient.service';
 import { PatientService } from './patient.service';
 export * from './photo.service';
@@ -10,4 +12,4 @@ export * from './status.service';
 import { StatusService } from './status.service';
 export * from './update.service';
 import { UpdateService } from './update.service';
-export const APIS = [DoctorService, PatientService, PhotoService, ReceptionistService, StatusService, UpdateService];
+export const APIS = [DoctorService, FilterService, PatientService, PhotoService, ReceptionistService, StatusService, UpdateService];

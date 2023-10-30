@@ -47,6 +47,23 @@ import {MatRadioModule} from "@angular/material/radio";
 import { SpecializationPageComponent } from './pages/specialization/specialization-page/specialization-page.component';
 import { ServicePageComponent } from './pages/services/service-page/service-page.component';
 import { HomePatientPageComponent } from './pages/patient/home-patient-page/home-patient-page.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import { DeleteConfirmComponent } from './shared/modals/delete-confirm/delete-confirm.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ModalDialogModal} from "./shared/modals/modal-dialog.modal";
+import { CreatePatientComponent } from './pages/patient/create-patient/create-patient.component';
+import {PatientModule} from "./pages/patient/patient.module";
+import { HomeManagementPageComponent } from './pages/receptionist/home-management-page/home-management-page.component';
+import {ReceptionistModule} from "./pages/receptionist/receptionist.module";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {NgSelectModule} from "@ng-select/ng-select";
+import { DoctorFilterComponent } from './features/doctors/doctor-filter/doctor-filter.component';
+import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 
@@ -58,17 +75,19 @@ import { HomePatientPageComponent } from './pages/patient/home-patient-page/home
   declarations: [
     AppComponent,
     CreateDoctorComponent,
-    CreateReceptionistComponent,
-    PatientProfileComponent,
     HomeDoctorPageComponent,
-    HomeReceptionistPageComponent,
     HomeServicesPageComponent,
-    HomePatientPageComponent,
+    DoctorFilterComponent,
+    CreateAppointmentComponent,
+
+
+
 
 
 
   ],
   imports: [
+
     BrowserModule,
     HeaderModule,
     OfficeModal,
@@ -84,10 +103,12 @@ import { HomePatientPageComponent } from './pages/patient/home-patient-page/home
     AppRoutingModule,
     ServiceModal,
     ReceptionistProfileModal,
-    ProfileModal,
     FormUpdatePersonalInfoModal,
     FormUpdateWorkInfoModal,
     MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    ModalDialogModal, PatientModule, ReceptionistModule, MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgSelectModule, MatButtonToggleModule
   ],
   providers: [
     {provide: AUTHORIZATION_BASE_PATH, useValue: environment.authorizationUri},

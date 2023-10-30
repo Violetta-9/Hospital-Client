@@ -24,22 +24,46 @@ import {HomeServicesPageComponent} from "./pages/services/home-services-page/hom
 import {SpecializationPageComponent} from "./pages/specialization/specialization-page/specialization-page.component";
 import {ServicePageComponent} from "./pages/services/service-page/service-page.component";
 import {HomePatientPageComponent} from "./pages/patient/home-patient-page/home-patient-page.component";
+import {CreatePatientComponent} from "./pages/patient/create-patient/create-patient.component";
+import {HomeManagementPageComponent} from "./pages/receptionist/home-management-page/home-management-page.component";
+import {CreateAppointmentComponent} from "./create-appointment/create-appointment.component";
+const itemRoutes: Routes = [
+  { path: 'page/service', component: HomeServicesPageComponent },
+  { path: 'service/create', component: CreateServiceComponent },
+
+  { path: 'page/office', component: HomeOfficePageComponent },
+  { path: 'office/create', component: CreateOfficeComponent },
+
+  { path: 'receptionist/profile', component: ReceptionistProfileComponent },
+  { path: 'page/receptionist', component: HomeReceptionistPageComponent },
+  { path: 'receptionist/create', component: CreateReceptionistComponent },
+
+  { path: 'page/doctor', component: HomeDoctorPageComponent },
+  { path: 'doctor/profile', component: DoctorProfileComponent },
+  { path: 'doctor/create', component: CreateDoctorComponent },
+
+  { path: 'page/patient', component: HomePatientPageComponent },
+  { path: 'patient/profile', component: PatientProfileComponent },
+  { path: 'patient/create', component: CreatePatientComponent },
+
+  { path: 'page/specialization', component: HomeSpecializationPageComponent },
+  { path: 'specialization/create', component: CreateSpecializationComponent },
+
+
+]
 
 const routes: Routes = [
-  { path: 'doctor/create', component: CreateDoctorComponent },
-  { path: 'receptionist/create', component: CreateReceptionistComponent },
-  { path: 'office/create', component: CreateOfficeComponent },
-  { path: 'service/create', component: CreateServiceComponent },
-  { path: 'specialization/create', component: CreateSpecializationComponent },
+
+
+
+
+
+
   { path: 'doctor/profile', component: DoctorProfileComponent },
+  { path: 'appointment', component: CreateAppointmentComponent },
   { path: 'receptionist/profile', component: ReceptionistProfileComponent },
-  { path: 'patient/profile', component: PatientProfileComponent },
-  { path: 'page/office', component: HomeOfficePageComponent },
-  { path: 'page/doctor', component: HomeDoctorPageComponent },
-  { path: 'page/patient', component: HomePatientPageComponent },
-  { path: 'page/receptionist', component: HomeReceptionistPageComponent },
-  { path: 'page/specialization', component: HomeSpecializationPageComponent },
-  { path: 'page/service', component: HomeServicesPageComponent },
+  { path: 'management', component: HomeManagementPageComponent,children:itemRoutes },
+
   { path: 'office', component: OfficePageComponent },
   { path: 'specialization', component: SpecializationPageComponent },
   { path: 'service', component: ServicePageComponent },

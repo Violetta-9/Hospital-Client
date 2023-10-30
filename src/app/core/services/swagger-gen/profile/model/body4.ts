@@ -11,12 +11,6 @@
  */
 
 export interface Body4 { 
-    firstName?: string;
-    lastName?: string;
-    middleName?: string;
-    email?: string;
-    phoneNumber?: string;
-    birthDate?: Date;
-    officeId?: number;
+    accountId?: string;
     file?: Blob;
 }
