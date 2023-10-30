@@ -3,6 +3,8 @@ import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/e
 import {ThemePalette} from "@angular/material/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {OfficeService} from "../../../core/services/swagger-gen/office";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -12,7 +14,9 @@ import {OfficeService} from "../../../core/services/swagger-gen/office";
 })
 export class CreateOfficeComponent extends EntityDetailsBaseComponent implements OnInit {
   color: ThemePalette = 'primary';
-  constructor(public officeService:OfficeService) {
+  constructor(public officeService:OfficeService,
+              private toastr: ToastrService,
+              private translate:TranslateService) {
     super();
     this._createForm()
   }
@@ -30,7 +34,19 @@ export class CreateOfficeComponent extends EntityDetailsBaseComponent implements
   }
 
   protected saveInternal(): any {
-    this.officeService.createOffice(this.detailsForm.getRawValue()).subscribe(x=>console.log(x));
+    this.officeService.createOffice(this.detailsForm.getRawValue()).subscribe(x=>{
+      if(x>0){
+        this.showSuccess();
+      }else{
+        this.showError();
+      }
+    });
+  }
+  showSuccess() {
+    this.toastr.success(this.translate.instant('RESPONSE.OFFICE.SUCCSSFULLY_CREATED'), 'Success!');
+  }
+  showError(){
+    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
   }
 
 }
