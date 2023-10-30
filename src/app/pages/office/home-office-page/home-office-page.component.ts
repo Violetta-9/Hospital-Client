@@ -10,7 +10,9 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 export class HomeOfficePageComponent implements OnInit {
   displayedColumns: string[] = ['address', 'status', 'registryNumber'];
   dataSource;
-  constructor(public officeService:OfficeService, private router: Router)
+  constructor(public officeService:OfficeService,
+              private router: Router,
+              private route: ActivatedRoute)
   {
 
   }
@@ -38,5 +40,9 @@ export class HomeOfficePageComponent implements OnInit {
     console.log(row)
     console.log(row.id)
    // this.router.navigate([r], { queryParams: { id: row } });
+  }
+
+  createOffice() {
+    this.router.navigate(['../../office/create'], {relativeTo:this.route });
   }
 }

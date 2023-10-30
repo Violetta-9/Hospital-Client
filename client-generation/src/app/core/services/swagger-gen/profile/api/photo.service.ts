@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { DeletePhotoDTO } from '../model/deletePhotoDTO';
+import { Response } from '../model/response';
 import { SubjectUpdate } from '../model/subjectUpdate';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -145,9 +146,9 @@ export class PhotoService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePhoto(body?: DeletePhotoDTO, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public deletePhoto(body?: DeletePhotoDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public deletePhoto(body?: DeletePhotoDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public deletePhoto(body?: DeletePhotoDTO, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public deletePhoto(body?: DeletePhotoDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public deletePhoto(body?: DeletePhotoDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public deletePhoto(body?: DeletePhotoDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -182,9 +183,81 @@ export class PhotoService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<number>('delete',`${this.basePath}/api/Photo`,
+        return this.httpClient.request<Response>('delete',`${this.basePath}/api/Photo`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update photo 
+     * 
+     * @param accountId 
+     * @param file 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updatePhotoForm(accountId?: string, file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public updatePhotoForm(accountId?: string, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public updatePhotoForm(accountId?: string, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
+    public updatePhotoForm(accountId?: string, file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): void; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (accountId !== undefined) {
+            formParams = formParams.append('AccountId', <any>accountId) as any || formParams;
+        }
+        if (file !== undefined) {
+            formParams = formParams.append('File', <any>file) as any || formParams;
+        }
+
+        return this.httpClient.request<Response>('patch',`${this.basePath}/api/Photo`,
+            {
+                body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

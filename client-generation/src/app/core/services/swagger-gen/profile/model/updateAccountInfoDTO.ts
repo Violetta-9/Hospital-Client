@@ -14,7 +14,7 @@ export interface UpdateAccountInfoDTO {
     accountId?: string;
     firstName?: string;
     lastName?: string;
-    email?: string;
+    middleName?: string;
     phoneNumber?: string;
     birthDate?: Date;
 }

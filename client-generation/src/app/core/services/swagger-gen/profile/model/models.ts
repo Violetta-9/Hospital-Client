@@ -5,6 +5,7 @@ export * from './body3';
 export * from './body4';
 export * from './body5';
 export * from './body6';
+export * from './body7';
 export * from './deletePhotoDTO';
 export * from './doctorAllDTO';
 export * from './doctorOneDTO';

@@ -19,6 +19,8 @@ import { Observable }                                        from 'rxjs';
 
 import { PatientAllDTO } from '../model/patientAllDTO';
 import { PatientOneDTO } from '../model/patientOneDTO';
+import { Response } from '../model/response';
+import { UsersDTO } from '../model/usersDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -63,9 +65,9 @@ export class PatientService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public assignPatientRole(body?: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public assignPatientRole(body?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public assignPatientRole(body?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public assignPatientRole(body?: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public assignPatientRole(body?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public assignPatientRole(body?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public assignPatientRole(body?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -100,7 +102,7 @@ export class PatientService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<string>('post',`${this.basePath}/api/Patient/roles`,
+        return this.httpClient.request<Response>('post',`${this.basePath}/api/Patient/roles`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -118,9 +120,9 @@ export class PatientService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePatientForm(accountId?: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public deletePatientForm(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public deletePatientForm(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public deletePatientForm(accountId?: string, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public deletePatientForm(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public deletePatientForm(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public deletePatientForm(accountId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -164,9 +166,72 @@ export class PatientService {
             formParams = formParams.append('accountId', <any>accountId) as any || formParams;
         }
 
-        return this.httpClient.request<string>('delete',`${this.basePath}/api/Patient`,
+        return this.httpClient.request<Response>('delete',`${this.basePath}/api/Patient`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find User
+     * 
+     * @param firstName 
+     * @param lastName 
+     * @param middleName 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findUser(firstName?: string, lastName?: string, middleName?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<UsersDTO>>;
+    public findUser(firstName?: string, lastName?: string, middleName?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UsersDTO>>>;
+    public findUser(firstName?: string, lastName?: string, middleName?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UsersDTO>>>;
+    public findUser(firstName?: string, lastName?: string, middleName?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (firstName !== undefined && firstName !== null) {
+            queryParameters = queryParameters.set('FirstName', <any>firstName);
+        }
+        if (lastName !== undefined && lastName !== null) {
+            queryParameters = queryParameters.set('LastName', <any>lastName);
+        }
+        if (middleName !== undefined && middleName !== null) {
+            queryParameters = queryParameters.set('MiddleName', <any>middleName);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<UsersDTO>>('get',`${this.basePath}/api/Patient/users`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -262,6 +327,59 @@ export class PatientService {
 
         return this.httpClient.request<PatientOneDTO>('get',`${this.basePath}/api/Patient/${encodeURIComponent(String(patientId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get Patient Id By AccountId
+     * 
+     * @param accountId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getPatientIdByAccountId(accountId?: string, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getPatientIdByAccountId(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getPatientIdByAccountId(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getPatientIdByAccountId(accountId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accountId !== undefined && accountId !== null) {
+            queryParameters = queryParameters.set('accountId', <any>accountId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<number>('get',`${this.basePath}/api/Patient`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

@@ -5,6 +5,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServiceService} from "../../../core/services/swagger-gen/service";
 import {MatRadioChange} from "@angular/material/radio";
 import {tap} from "rxjs";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-service-page',
@@ -16,7 +18,10 @@ export class ServicePageComponent extends EntityDetailsBaseComponent implements 
   public idFromQuery;
   editInfo=true;
   serviceStatus;
-  constructor(private route: ActivatedRoute,public service:ServiceService) {
+  constructor(private route: ActivatedRoute,
+              public service:ServiceService,
+              private toastr: ToastrService,
+              private translate:TranslateService) {
     super();
 
   }
@@ -44,12 +49,6 @@ export class ServicePageComponent extends EntityDetailsBaseComponent implements 
       }
     )
   }
-  protected saveInternal(): any {
-    this.detailsForm.addControl('id',new FormControl(this.idFromQuery))
-    this.service.updateService(this.detailsForm.getRawValue()).subscribe(x=>console.log(x))
-    console.log(this.detailsForm.getRawValue())
-  }
-
   private getServiceById() {
     this.service.getServiceById(this.idFromQuery).subscribe(x=>{
       this.detailsForm.get('title').setValue(x.title);
@@ -63,10 +62,25 @@ export class ServicePageComponent extends EntityDetailsBaseComponent implements 
     this.service.getServiceCategories().pipe(tap(x => this.servicesCategoriesList = x)).subscribe(x => this.getServiceById())
   }
 
+  protected saveInternal(): any {
+    this.detailsForm.addControl('id',new FormControl(this.idFromQuery))
+    this.service.updateService(this.detailsForm.getRawValue()).subscribe(x=>{
+      if(x.isSuccess){
+        this.toastr.success(this.translate.instant('RESPONSE.SERVICE.SUCCESSFULLY_UPDATE'))
+      }
+    })
+
+  }
+
+
   updateStatus($event: MatRadioChange) {
 this.service.updateServiceStatus({
       id:this.idFromQuery,
         isActive: JSON.parse($event.value)
-    }).subscribe(x=>console.log(x))
+    }).subscribe(x=>{
+      if(x.isSuccess){
+        this.toastr.success(this.translate.instant('RESPONSE.SERVICE.SUCCESSFULLY_UPDATE_STATUS'))
+      }
+})
   }
 }

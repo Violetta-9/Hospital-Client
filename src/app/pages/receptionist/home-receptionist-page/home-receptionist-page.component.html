@@ -1,6 +1,10 @@
 <h1 class="text-center">
   Receptionist management</h1>
-<div class="div-center">
+<div class="col-lg-12 row">
+  <div class="col-lg-3 ps-lg-5 ">
+    <button class="col-lg-8 btn-center mt-lg-3 " mat-raised-button color="primary" type="submit" (click)="createReceptionist()" >Create new receptionist</button>
+  </div>
+  <div class="col-lg-9 ps-lg-5">
   <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8">
 
     <!-- Name Column -->
@@ -22,4 +26,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="linkTo(row)" ></tr>
   </table>
+</div>
 </div>

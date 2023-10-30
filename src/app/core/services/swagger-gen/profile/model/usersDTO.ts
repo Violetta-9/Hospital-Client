@@ -10,13 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface ReceptionistOneDTO { 
+export interface UsersDTO { 
     accountId?: string;
     firstName?: string;
     lastName?: string;
     middleName?: string;
     phoneNumber?: string;
-    birthDay?: Date;
-    officeAddress?: string;
-    documentAbsolutUrl?: string;
 }

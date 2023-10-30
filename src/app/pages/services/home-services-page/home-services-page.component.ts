@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ServiceService} from "../../../core/services/swagger-gen/service";
-import {NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-services-page',
@@ -10,7 +10,9 @@ import {NavigationExtras, Router} from "@angular/router";
 export class HomeServicesPageComponent implements OnInit {
   displayedColumns: string[] = ['title','price', 'isActive','serviceCategoryName'];
   dataSource;
-  constructor(public serviceService:ServiceService,private router: Router) {
+  constructor(public serviceService:ServiceService,
+              private router: Router,
+              private route: ActivatedRoute) {
     this.getAllService();
   }
 
@@ -27,5 +29,9 @@ export class HomeServicesPageComponent implements OnInit {
 
     console.log(row)
     console.log(row.id)
+  }
+
+  createPatient() {
+    this.router.navigate(['../../service/create'], {relativeTo:this.route });
   }
 }

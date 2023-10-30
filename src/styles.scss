@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "../node_modules/ngx-toastr/toastr.css";
+@import "~@ng-select/ng-select/themes/material.theme.css"; at styles.css
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -194,3 +195,18 @@ button.toast-close-button {
     width: 25em;
   }
 }
+.white-primary-color {
+  background: #eae9e5 !important;
+}
+.white-btn {
+  @extend .white-primary-color;
+  color: #2a2539 !important;
+}
+.dark-primary-color {
+  background: #efc8c8 !important;
+}
+.dark-btn {
+  @extend .dark-primary-color;
+  color: #2a2539 !important;
+}
+

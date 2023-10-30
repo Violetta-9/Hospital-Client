@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
-import {NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-specialization-page',
@@ -11,7 +11,9 @@ export class HomeSpecializationPageComponent implements OnInit {
   displayedColumns: string[] = ['specializationTitle', 'status'];
   dataSource;
 
-  constructor(public specializationService:SpecializationService, private router: Router) {
+  constructor(public specializationService:SpecializationService,
+              private router: Router,
+              private route: ActivatedRoute) {
     this.getAllSpecialization();
   }
 
@@ -30,5 +32,9 @@ export class HomeSpecializationPageComponent implements OnInit {
 
     console.log(row)
     console.log(row.id)
+  }
+
+  createSpecialization() {
+    this.router.navigate(['../../specialization/create'], {relativeTo:this.route});
   }
 }

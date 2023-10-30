@@ -6,6 +6,8 @@ import {MatRadioChange} from "@angular/material/radio";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServiceService} from "../../../core/services/swagger-gen/service";
 import {ActivatedRoute} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-specialization-page',
@@ -20,7 +22,11 @@ export class SpecializationPageComponent  extends EntityDetailsBaseComponent imp
   toppingList=[];
   defaultServices;
   idFromQuery;
-  constructor(public specializationService:SpecializationService,public service:ServiceService,private route: ActivatedRoute) {
+  constructor(public specializationService:SpecializationService,
+              public service:ServiceService,
+              private route: ActivatedRoute,
+              private toastr: ToastrService,
+              private translate:TranslateService) {
     super();
   }
 
@@ -44,11 +50,6 @@ export class SpecializationPageComponent  extends EntityDetailsBaseComponent imp
       }
     )
   }
-  protected saveInternal(): any {
-    this.detailsForm.addControl("id",new FormControl(this.specialization.id))
-    this.specializationService.updateSpecialization(this.detailsForm.getRawValue()).subscribe(x=>console.log(x));
-
-  }
 
   private getSpecialization() {
 
@@ -67,10 +68,19 @@ export class SpecializationPageComponent  extends EntityDetailsBaseComponent imp
 
     });
   }
-
-  deleteService(id) {
+  private getAllServices() {
+    this.service.getAllFreeServices().subscribe(x=>this.toppingList=[...this.toppingList,...x])
+  }
+  protected saveInternal(): any {
+    this.detailsForm.addControl("id",new FormControl(this.specialization.id))
+    this.specializationService.updateSpecialization(this.detailsForm.getRawValue()).subscribe(x=>{
+      if(x.isSuccess){
+        this.toastr.success(this.translate.instant('RESPONSE.SPECIALIZATION.SUCCESSFULLY_UPDATE'))
+      }
+    });
 
   }
+
 
   onChange(id, $event: MatOptionSelectionChange<any>) {
     if($event.source.selected && !this.detailsForm.get('servicesId').value.includes(id)){
@@ -97,10 +107,12 @@ export class SpecializationPageComponent  extends EntityDetailsBaseComponent imp
 this.specializationService.updateSpecializationStatus({
   id:this.specialization.id,
   isActive: JSON.parse($event.value)
-}).subscribe(x=>console.log(x))
+}).subscribe(x=>{
+  if(x.isSuccess){
+    this.toastr.success(this.translate.instant('RESPONSE.SPECIALIZATION.SUCCESSFULLY_UPDATE_STATUS'))
+  }
+})
   }
 
-  private getAllServices() {
-    this.service.getAllFreeServices().subscribe(x=>this.toppingList=[...this.toppingList,...x])
-  }
+
 }

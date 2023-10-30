@@ -6,6 +6,7 @@ import {UserService} from "../../../../core/services/swagger-gen/authorization";
 import {passwordValidator} from "../../../../shared/validators/passwordValidator";
 import {emailValidators} from "../../../../shared/validators/emailValidator";
 import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-registration-modal',
@@ -20,7 +21,8 @@ export class RegistrationModalComponent extends EntityDetailsBaseComponent imple
     public dialogRef: MatDialogRef<RegistrationModalComponent>,
     public authorizationApi: UserService,
     public dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private translate:TranslateService
 
   ) {
     super()
@@ -61,7 +63,7 @@ export class RegistrationModalComponent extends EntityDetailsBaseComponent imple
 
   }
   showSuccess() {
-    this.toastr.success('You have registered.Check your email', 'Success!');
+    this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_REGISTERED'), 'Success!');
   }
 
 }

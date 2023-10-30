@@ -9,6 +9,7 @@ import {AllOfficesDto, OfficeService} from "../../../core/services/swagger-gen/o
 import {SpecializationListDTO, SpecializationService} from "../../../core/services/swagger-gen/specialization";
 import {filter} from "rxjs";
 import {StatusDTO, StatusService} from "../../../core/services/swagger-gen/profile";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -26,7 +27,9 @@ export class RegistrationUserFormComponent extends EntityDetailsBaseComponent im
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  constructor(public officeService:OfficeService,public specializationService:SpecializationService,public statusService:StatusService ) {
+  constructor(public officeService:OfficeService,
+              public specializationService:SpecializationService,
+              public statusService:StatusService) {
     super();
     this.getAllOffice();
     this.getStatus();
@@ -119,8 +122,7 @@ export class RegistrationUserFormComponent extends EntityDetailsBaseComponent im
   }
 
   protected saveInternal(): any {
-    console.log("tute")
-    console.log(this.detailsForm.getRawValue());
+
     this.detailsForm.get('file').setValue(this.fileToReturn);
     this.registerData.emit(this.detailsForm.getRawValue());
 

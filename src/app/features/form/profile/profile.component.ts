@@ -4,6 +4,10 @@ import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/e
 import {emailValidators} from "../../../shared/validators/emailValidator";
 import {DoctorService, StatusService} from "../../../core/services/swagger-gen/profile";
 import {MatSelectChange} from "@angular/material/select";
+import {AddImageToAvatarService} from "../../../core/services/manage-photo/add-image-to-avatar.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteConfirmComponent} from "../../../shared/modals/delete-confirm/delete-confirm.component";
+import {DeletePersonService} from "../../../core/services/manage-delete/delete-person.service";
 
 @Component({
   selector: 'app-profile',
@@ -17,16 +21,22 @@ export class ProfileComponent  extends EntityDetailsBaseComponent implements OnI
   @Input() profileUser;
   @Output() dataForPersonalUpdating=new EventEmitter();
   @Output() dataForWorkUpdating=new EventEmitter();
-
+  @Output() doctorStatus=new EventEmitter();
+public newPhoto;
   panelOpenState = false;
 
-  constructor(public statusService:StatusService,public doctorService:DoctorService){
+  constructor(public statusService:StatusService,
+              public doctorService:DoctorService,
+              public addImageToAvatar:AddImageToAvatarService,
+              public dialog: MatDialog,
+              public deletePersonService:DeletePersonService){
     super();
 this.getStatuses();
   }
 
   ngOnInit(): void {
-
+this.addImageToAvatar.addImageTrigger.subscribe(x=>this.newPhoto=x)
+    this.addImageToAvatar.deleteImageTrigger.subscribe(x=>this.newPhoto=x)
     this._createForm();
 
 
@@ -35,7 +45,7 @@ this.getStatuses();
     this.statusGroup = new FormGroup({
       status:new FormControl(this.profileUser.statusTitle)
     });
-console.log(this.statusGroup.getRawValue())
+
 
   }
 
@@ -60,6 +70,22 @@ console.log(this.statusGroup.getRawValue())
 
   onSelect($event: MatSelectChange) {
     console.log($event.value)
-    this.doctorService.updateStatusForm($event.value,this.profileUser.accountId).subscribe(x=>console.log(x))
+    this.doctorStatus.emit($event.value);
+
+  }
+
+  deletePerson(element:any) {
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      data: {element},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if(result){
+          this.deletePersonService.DeletePerson(result);
+      }
+
+    });
+
   }
 }
