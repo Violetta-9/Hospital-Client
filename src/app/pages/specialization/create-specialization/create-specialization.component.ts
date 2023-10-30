@@ -7,6 +7,8 @@ import {MatSelectChange} from "@angular/material/select";
 import {MatOptionSelectionChange} from "@angular/material/core";
 import {ActivatedRoute} from "@angular/router";
 import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-create-specialization',
@@ -18,7 +20,10 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
   toppingList:OutServicesDto[];
   displayedColumns: string[] = ['title', 'price', 'isActive', 'serviceCategoryName'];
   dataSource=[];
-  constructor(public service:ServiceService,public specialization:SpecializationService) {
+  constructor(public service:ServiceService,
+              public specialization:SpecializationService,
+              private toastr: ToastrService,
+              private translate:TranslateService) {
     super();
     this._createForm();
     this.getAllServices();
@@ -35,23 +40,14 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
       }
     )
   }
-
-  protected saveInternal(): any {
-
-    console.log(this.detailsForm.getRawValue())
-    this.specialization.createSpecialization(this.detailsForm.getRawValue()).subscribe(x=>console.log(x))
-  }
-
   private getAllServices() {
     this.service.getAllFreeServices().subscribe(x=>this.toppingList=x);
 
   }
-
   onChange(id: number, $event: MatOptionSelectionChange<number>) {
-this.isTableOpen=!this.isTableOpen;
+    this.isTableOpen=!this.isTableOpen;
     if($event.source.selected){
       this.service.getServiceById(id).subscribe(x=>this.dataSource=[...this.dataSource,x]);
-
     }else{
       console.log(id);
       var a=this.dataSource.find(x=>x.id==id);
@@ -63,6 +59,24 @@ this.isTableOpen=!this.isTableOpen;
         this.dataSource=[...this.dataSource]
       }
     }
+  }
+
+  protected saveInternal(): any {
+    this.specialization.createSpecialization(this.detailsForm.getRawValue()).subscribe(x=>{
+      if(x>0){
+        this.showSuccess();
+      }else{
+        this.showError();
+      }
+    })
+  }
+
+
+  showSuccess() {
+    this.toastr.success(this.translate.instant('RESPONSE.SPECIALIZATION.SUCCESSFULLY_CREATED'), 'Success!');
+  }
+  showError(){
+    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
   }
 
 

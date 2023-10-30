@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServiceCategoriesDTO, ServiceService} from "../../../core/services/swagger-gen/service";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-create-service',
@@ -10,7 +12,9 @@ import {ServiceCategoriesDTO, ServiceService} from "../../../core/services/swagg
 })
 export class CreateServiceComponent extends EntityDetailsBaseComponent implements OnInit {
 public servicesCategoriesList:ServiceCategoriesDTO[]
-  constructor(public service:ServiceService) {
+  constructor(public service:ServiceService,
+              private toastr: ToastrService,
+              private translate:TranslateService) {
     super();
 this.getServicesCategories();
     this._createForm()
@@ -27,13 +31,25 @@ this.getServicesCategories();
       }
     )
   }
-
-  protected saveInternal(): any {
-    console.log(this.detailsForm.get("serviceCategoryId").errors)
-    this.service.createService(this.detailsForm.getRawValue()).subscribe(x=>console.log(x));
-  }
-
   private getServicesCategories() {
     this.service.getServiceCategories().subscribe(x=>this.servicesCategoriesList=x)
+  }
+  protected saveInternal(): any {
+
+    this.service.createService(this.detailsForm.getRawValue()).subscribe(x=>{
+      if(x>0){
+        this.showSuccess()
+      }else{
+        this.showError()
+      }
+    });
+  }
+
+
+  showSuccess() {
+    this.toastr.success(this.translate.instant('RESPONSE.SERVICE.SUCCESSFULLY_CREATED'), 'Success!');
+  }
+  showError(){
+    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ReceptionistService} from "../../../core/services/swagger-gen/profile";
 import dateFormat, { masks } from "dateformat";
+import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 @Component({
   selector: 'app-create-receptionist',
   templateUrl: './create-receptionist.component.html',
@@ -8,17 +10,29 @@ import dateFormat, { masks } from "dateformat";
 })
 export class CreateReceptionistComponent implements OnInit {
 public userRole='receptionist'
-  public s=0;
-  constructor(public receptionist:ReceptionistService) { }
+  constructor(public receptionist:ReceptionistService,
+              private toastr: ToastrService,
+              private translate:TranslateService) { }
 
   ngOnInit(): void {
   }
 
   createReceptionist(repo: any) {
-  console.log("i am here recep")
-    this.s=2;
+
     this.receptionist.assignReceptionistRoleForm(repo.firstName,repo.lastName,repo.middleName,
       repo.email,repo.phoneNumber,dateFormat(repo.birthDate, "isoDateTime"),
-     repo.office,repo.file).subscribe(x=>console.log(x))
+     repo.office,repo.file).subscribe(x=>{
+        if(x.isSuccess){
+          this.showSuccess();
+        }else{
+          this.showError();
+        }
+    })
+  }
+  showSuccess() {
+    this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_CREATE'), 'Success!');
+  }
+  showError(){
+    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
   }
 }
