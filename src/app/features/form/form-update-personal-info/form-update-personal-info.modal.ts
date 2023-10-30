@@ -9,6 +9,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {CommonModule} from "@angular/common";
+import {MatIconModule} from "@angular/material/icon";
+import {MaterialFileInputModule} from "ngx-material-file-input";
+import {ImageCropperModule} from "ngx-image-cropper";
 
 
 
@@ -26,7 +29,10 @@ import {CommonModule} from "@angular/common";
     MatDatepickerModule,
     MatButtonModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MaterialFileInputModule,
+    ImageCropperModule
 
 
   ],

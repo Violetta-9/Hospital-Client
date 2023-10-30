@@ -15,11 +15,11 @@ export interface DoctorOneDTO {
     firstName?: string;
     lastName?: string;
     middleName?: string;
+    phoneNumber?: string;
     specializationTitle?: string;
     officeAddress?: string;
     statusTitle?: string;
     documentAbsolutUrl?: string;
-    blob?: string;
     careerStartYear?: Date;
     birthDay?: Date;
 }

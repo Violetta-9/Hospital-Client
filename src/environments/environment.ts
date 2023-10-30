@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  authorizationUri: "http://localhost:5264",
-  profileUri:"http://localhost:5191",
-  officeUri:"http://localhost:5208",
+  authorizationUri: "https://localhost:7091",
+  profileUri:"https://localhost:7131",
+  officeUri:"http://localhost:44377",
   specializationUri:"http://localhost:5290",
   serviceUri:"http://localhost:5024"
 };

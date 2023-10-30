@@ -11,11 +11,44 @@
     "MAXLENGTH": "Exceeds the maximum number of characters",
     "INCORRECTEMAIL": "Invalid email entered",
     "NOTMATHPASSWORD": "Passwords don't match",
-    "NOTNUMBER": "This field must contain only numbers"
+    "NOTNUMBER": "This field must contain only numbers",
+    "ERROR_MESSAGES": "Something went wrong. Try again later"
   },
   "SETTINGS": {
     "PATH": "http://127.0.0.1:10000/devstoreaccount1/hospital-documents/"
+  },
+  "RESPONSE": {
+
+    "OFFICE":{
+      "SUCCESSFULLY_CREATED": "Office was created successfully",
+      "SUCCESSFULLY_DELETE": "'Office has been successfully deleted",
+      "SUCCESSFULLY_UPDATE": "'Office has been successfully updated",
+      "SUCCESSFULLY_UPDATE_STATUS": "'Office status has been successfully updated"
+    },
+    "PROFILE": {
+      "SUCCESSFULLY_REGISTERED": "You has registered successfully.Check your email email",
+      "SUCCESSFULLY_CREATE": "Profile has been successfully created",
+      "SUCCESSFULLY_UPDATE_PERSONAL_INFO": "'{{ name }}''s personal information has been successfully updated",
+      "SUCCESSFULLY_UPDATE_WORK_INFO": "'{{ name }}''s work information has been successfully updated",
+      "SUCCESSFULLY_UPDATE_STATUS": "'{{ name }}''s status has been successfully updated",
+      "SUCCESSFULLY_DELETE": "'{{ name }}''s profile has been successfully deleted",
+      "SUCCESSFULLY_APPROVED": "'{{ name }}' was created succesfull"
+    },
+    "SERVICE": {
+      "SUCCESSFULLY_CREATED": "Service was created successfully",
+      "SUCCESSFULLY_DELETE": "Service has been successfully deleted",
+      "SUCCESSFULLY_UPDATE": "Service has been successfully updated",
+      "SUCCESSFULLY_UPDATE_STATUS": "Service status has been successfully updated"
+    },
+    "SPECIALIZATION": {
+      "SUCCESSFULLY_CREATED": "Specialization was created successfully",
+      "SUCCESSFULLY_DELETE": "Specialization has been successfully deleted",
+      "SUCCESSFULLY_UPDATE": "Specialization has been successfully updated",
+      "SUCCESSFULLY_UPDATE_STATUS": "Specialization status has been successfully updated"
+    }
+
   }
+
 
 
 }

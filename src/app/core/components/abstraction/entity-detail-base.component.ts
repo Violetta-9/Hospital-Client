@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {ComponentBase} from "./component-base";
 
 
@@ -10,6 +10,8 @@ export abstract class EntityDetailsBaseComponent extends ComponentBase{
   public submitted: boolean = false;
 
   public detailsForm: FormGroup = new FormGroup({});
+
+
 
   get f() {
 

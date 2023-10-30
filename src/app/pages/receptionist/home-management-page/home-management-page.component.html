@@ -1,0 +1,26 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link
+     (click)="activeLink = 'profile'"
+     [active]="activeLink =='profile'"
+     [routerLink]="profilePath"
+     [queryParams]="{id: getProfileId()}"
+    > My profile </a>
+  <a mat-tab-link label="Tab 5" [active]="activeLink == 'menu'" (click)="activeLink = 'menu'"  [routerLink]="menuPath"  >
+    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="activeLink = 'menu'">
+      <mat-icon color="warn" aria-label="Example icon-button with a heart icon">more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let link of info" mat-menu-item (click)="changeTab(link.id)" [routerLink]="link.link">{{link.title}}</button>
+    </mat-menu>
+  </a>
+  <a mat-tab-link *ngFor="let link of info"
+     (click)="activeLink = link.title"
+     [active]="activeLink == link.title"
+     [routerLink]="link.link"
+    > {{link.title}} </a>
+</nav>
+
+
+  <router-outlet></router-outlet>
+
+

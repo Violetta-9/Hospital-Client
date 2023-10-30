@@ -1,3 +1,16 @@
 table {
   width: 70%;
 }
+.text-center {
+  text-align: center;
+}
+.div-center{
+  display: flex;
+  justify-content: center;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+
+
