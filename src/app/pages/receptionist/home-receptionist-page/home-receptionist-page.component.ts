@@ -27,7 +27,7 @@ export class HomeReceptionistPageComponent implements OnInit {
 
 
     linkTo(row) {
-
+debugger
       this.router.navigate(['../../receptionist/profile'], { relativeTo:this.route ,queryParams: { id: row.id }});
 
       console.log(row)

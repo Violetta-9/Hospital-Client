@@ -71,9 +71,9 @@ export class ReceptionistService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public assignReceptionistRoleForm(firstName?: string, lastName?: string, middleName?: string, email?: string, phoneNumber?: string, birthDate?: Date, officeId?: number, file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -148,7 +148,7 @@ export class ReceptionistService {
             formParams = formParams.append('File', <any>file) as any || formParams;
         }
 
-        return this.httpClient.request<string>('post',`${this.basePath}/api/Receptionist/roles`,
+        return this.httpClient.request<Response>('post',`${this.basePath}/api/Receptionist/roles`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
@@ -319,6 +319,59 @@ export class ReceptionistService {
     }
 
     /**
+     * Get Receptionist Id By AccountId
+     * 
+     * @param accountId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getReceptionistIdByAccountId(accountId?: string, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getReceptionistIdByAccountId(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getReceptionistIdByAccountId(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getReceptionistIdByAccountId(accountId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accountId !== undefined && accountId !== null) {
+            queryParameters = queryParameters.set('accountId', <any>accountId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<number>('get',`${this.basePath}/api/Receptionist`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Update Office
      * 
      * @param accountId 
@@ -326,9 +379,9 @@ export class ReceptionistService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public updateOfficeForm(accountId?: string, officeId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public updateOfficeForm(accountId?: string, officeId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -376,7 +429,7 @@ export class ReceptionistService {
             formParams = formParams.append('OfficeId', <any>officeId) as any || formParams;
         }
 
-        return this.httpClient.request<string>('patch',`${this.basePath}/api/Receptionist`,
+        return this.httpClient.request<Response>('patch',`${this.basePath}/api/Receptionist`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

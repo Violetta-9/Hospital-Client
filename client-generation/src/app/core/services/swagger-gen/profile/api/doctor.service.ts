@@ -384,6 +384,59 @@ export class DoctorService {
     }
 
     /**
+     * Get Doctor Id By AccountId
+     * 
+     * @param accountId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getDoctorIdByAccountId(accountId?: string, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getDoctorIdByAccountId(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getDoctorIdByAccountId(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getDoctorIdByAccountId(accountId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (accountId !== undefined && accountId !== null) {
+            queryParameters = queryParameters.set('accountId', <any>accountId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<number>('get',`${this.basePath}/api/Doctor`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Get Doctor By Id
      * 
      * @param officeId 

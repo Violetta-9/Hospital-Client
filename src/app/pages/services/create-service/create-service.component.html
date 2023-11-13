@@ -30,7 +30,7 @@
         <mat-select formControlName="serviceCategoryId" required>
 
           <mat-option *ngFor="let service of servicesCategoriesList" [value]="service.id"   >
-            {{service.title}}
+            {{service.title}}-{{service.time}} h
           </mat-option>
         </mat-select>
         <mat-error *ngIf="submitted && f.serviceCategoryId?.errors?.required">{{'ERROR.REQUIRED' | translate}}

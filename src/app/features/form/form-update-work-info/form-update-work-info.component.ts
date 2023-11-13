@@ -51,7 +51,7 @@ public editWorkInfo=true;
   }
   private getAllOffices() {
     this.officeService.getAllOffices().subscribe(x=>{
-      let defValue=x.find(s=>s.address.toLowerCase()==this.userProfile.officeAddress.toLowerCase()).id;
+      let defValue=x.find(s=>s.address.toLowerCase()==this.userProfile.officeAddress.toLowerCase());
 
       this.offices=x;
       this.detailsForm.get('officeId').setValue(defValue);

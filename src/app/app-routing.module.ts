@@ -55,10 +55,6 @@ const itemRoutes: Routes = [
 const routes: Routes = [
 
 
-
-
-
-
   { path: 'doctor/profile', component: DoctorProfileComponent },
   { path: 'appointment', component: CreateAppointmentComponent },
   { path: 'receptionist/profile', component: ReceptionistProfileComponent },

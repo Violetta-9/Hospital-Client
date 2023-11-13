@@ -20,6 +20,5 @@ export interface DoctorAllDTO {
     officeAddress?: string;
     statusTitle?: string;
     birthDay?: Date;
-    careerDate?: Date;
     documentAbsolutUrl?: string;
 }

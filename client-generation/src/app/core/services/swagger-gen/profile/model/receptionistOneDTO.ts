@@ -15,8 +15,6 @@ export interface ReceptionistOneDTO {
     firstName?: string;
     lastName?: string;
     middleName?: string;
-    phoneNumber?: string;
-    birthDay?: Date;
     officeAddress?: string;
     documentAbsolutUrl?: string;
 }

@@ -27,14 +27,14 @@ export class CreateOfficeComponent extends EntityDetailsBaseComponent implements
     this.detailsForm = new FormGroup({
         address: new FormControl('', [Validators.maxLength(100), Validators.required]),
         registryPhoneNumber: new FormControl('', [Validators.maxLength(10), Validators.required]),
-
-
+        file: new FormControl('', [Validators.maxLength(10), Validators.required]),
       }
     )
   }
 
   protected saveInternal(): any {
-    this.officeService.createOffice(this.detailsForm.getRawValue()).subscribe(x=>{
+
+    this.officeService.createOfficeForm(this.detailsForm.getRawValue().address,this.detailsForm.getRawValue().registryPhoneNumber,true,this.detailsForm.getRawValue().file._files[0]).subscribe(x=>{
       if(x>0){
         this.showSuccess();
       }else{

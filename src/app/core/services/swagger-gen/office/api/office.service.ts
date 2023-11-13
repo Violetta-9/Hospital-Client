@@ -18,9 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { AllOfficesDto } from '../model/allOfficesDto';
-import { CreateOfficeDTO } from '../model/createOfficeDTO';
+import { OfficeDto } from '../model/officeDto';
 import { Response } from '../model/response';
-import { UpdateOfficeDTO } from '../model/updateOfficeDTO';
 import { UpdateOfficeStatusDTO } from '../model/updateOfficeStatusDTO';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -62,14 +61,20 @@ export class OfficeService {
     /**
      * Create office
      * 
-     * @param body 
+     * @param address 
+     * @param registryPhoneNumber 
+     * @param isActive 
+     * @param file 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOffice(body?: CreateOfficeDTO, observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public createOffice(body?: CreateOfficeDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public createOffice(body?: CreateOfficeDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public createOffice(body?: CreateOfficeDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createOfficeForm(address?: string, registryPhoneNumber?: string, isActive?: boolean, file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public createOfficeForm(address?: string, registryPhoneNumber?: string, isActive?: boolean, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public createOfficeForm(address?: string, registryPhoneNumber?: string, isActive?: boolean, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public createOfficeForm(address?: string, registryPhoneNumber?: string, isActive?: boolean, file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
 
 
         let headers = this.defaultHeaders;
@@ -94,18 +99,39 @@ export class OfficeService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/_*+json'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): void; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (address !== undefined) {
+            formParams = formParams.append('Address', <any>address) as any || formParams;
+        }
+        if (registryPhoneNumber !== undefined) {
+            formParams = formParams.append('RegistryPhoneNumber', <any>registryPhoneNumber) as any || formParams;
+        }
+        if (isActive !== undefined) {
+            formParams = formParams.append('IsActive', <any>isActive) as any || formParams;
+        }
+        if (file !== undefined) {
+            formParams = formParams.append('File', <any>file) as any || formParams;
         }
 
         return this.httpClient.request<number>('post',`${this.basePath}/api/Office/create`,
             {
-                body: body,
+                body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -160,16 +186,72 @@ export class OfficeService {
     }
 
     /**
-     * Update office
+     * Get office by id offices
      * 
-     * @param body 
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateOffice(body?: UpdateOfficeDTO, observe?: 'body', reportProgress?: boolean): Observable<Response>;
-    public updateOffice(body?: UpdateOfficeDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
-    public updateOffice(body?: UpdateOfficeDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
-    public updateOffice(body?: UpdateOfficeDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOfficeById(id: number, observe?: 'body', reportProgress?: boolean): Observable<OfficeDto>;
+    public getOfficeById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<OfficeDto>>;
+    public getOfficeById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<OfficeDto>>;
+    public getOfficeById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getOfficeById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<OfficeDto>('get',`${this.basePath}/api/Office/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update office
+     * 
+     * @param officeId 
+     * @param address 
+     * @param registryPhoneNumber 
+     * @param file 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateOfficeForm(officeId?: number, address?: string, registryPhoneNumber?: string, file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public updateOfficeForm(officeId?: number, address?: string, registryPhoneNumber?: string, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public updateOfficeForm(officeId?: number, address?: string, registryPhoneNumber?: string, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
+    public updateOfficeForm(officeId?: number, address?: string, registryPhoneNumber?: string, file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
 
 
         let headers = this.defaultHeaders;
@@ -194,18 +276,39 @@ export class OfficeService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/_*+json'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): void; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (officeId !== undefined) {
+            formParams = formParams.append('OfficeId', <any>officeId) as any || formParams;
+        }
+        if (address !== undefined) {
+            formParams = formParams.append('Address', <any>address) as any || formParams;
+        }
+        if (registryPhoneNumber !== undefined) {
+            formParams = formParams.append('RegistryPhoneNumber', <any>registryPhoneNumber) as any || formParams;
+        }
+        if (file !== undefined) {
+            formParams = formParams.append('File', <any>file) as any || formParams;
         }
 
         return this.httpClient.request<Response>('put',`${this.basePath}/api/Office`,
             {
-                body: body,
+                body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

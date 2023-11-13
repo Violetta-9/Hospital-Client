@@ -1,7 +1,8 @@
-<div class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
+<div *ngIf="office?.id &&detailsForm.controls != {}" class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
 
   <div class="col-lg-2 me-lg-3">
-    <img src="/assets/buildings.png">
+
+    <img [src]="(!office.filePath) ? 'assets/buildings.png': office.filePath ">
 
   </div>
 
@@ -42,7 +43,7 @@
 
 
 
-<mat-expansion-panel class="mt-lg-4" (opened)="panelOpenState = true"
+<mat-expansion-panel  class="mt-lg-4" (opened)="panelOpenState = true"
                      (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title class="h6">
@@ -53,7 +54,7 @@
   <div class="ms-lg-5 ps-lg-5 mt-lg-5 " >
     <form [formGroup]="detailsForm" novalidate class="col-lg-12 row" >
 
-      <div class="col-lg-3 ">
+      <div class="col-lg-3 " *ngIf="detailsForm.controls.address">
         <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.firstName?.errors">
           <mat-label>Address</mat-label>
           <input matInput formControlName="address" maxlength="257" required [readonly]="editInfo">
@@ -63,7 +64,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-lg-3 ">
+      <div class="col-lg-3 " *ngIf="detailsForm.controls.registryPhoneNumber">
         <mat-form-field appearance="outline" [class.mat-form-field-invalid]="submitted && f.lastName?.errors">
           <mat-label>Registry phone number</mat-label>
           <input matInput formControlName="registryPhoneNumber" [readonly]="editInfo">

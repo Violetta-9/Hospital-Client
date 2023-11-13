@@ -17,5 +17,6 @@ export interface PatientOneDTO {
     middleName?: string;
     phoneNumber?: string;
     birthDay?: Date;
+    photoUrl?: string;
     documentAbsolutUrl?: string;
 }

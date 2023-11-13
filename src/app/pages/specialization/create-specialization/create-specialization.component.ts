@@ -9,6 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
 import {ToastrService} from "ngx-toastr";
 import {TranslateService} from "@ngx-translate/core";
+import { EmptyService } from '../../../core/services/swagger-gen/service/model/emptyService';
 
 @Component({
   selector: 'app-create-specialization',
@@ -17,8 +18,8 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class CreateSpecializationComponent  extends EntityDetailsBaseComponent implements OnInit {
   public isTableOpen=false;
-  toppingList:OutServicesDto[];
-  displayedColumns: string[] = ['title', 'price', 'isActive', 'serviceCategoryName'];
+  toppingList:EmptyService[];
+  displayedColumns: string[] = ['title'];
   dataSource=[];
   constructor(public service:ServiceService,
               public specialization:SpecializationService,
@@ -44,10 +45,14 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
     this.service.getAllFreeServices().subscribe(x=>this.toppingList=x);
 
   }
-  onChange(id: number, $event: MatOptionSelectionChange<number>) {
-    this.isTableOpen=!this.isTableOpen;
+  onChange(id: number, title : string, $event: MatOptionSelectionChange<number>) {
+
+    if(!this.isTableOpen){
+      this.isTableOpen=!this.isTableOpen;
+    }
+
     if($event.source.selected){
-      this.service.getServiceById(id).subscribe(x=>this.dataSource=[...this.dataSource,x]);
+      this.dataSource=[...this.dataSource,{id: id,title: title }]
     }else{
       console.log(id);
       var a=this.dataSource.find(x=>x.id==id);
@@ -59,9 +64,13 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
         this.dataSource=[...this.dataSource]
       }
     }
+    if(this.dataSource.length==0){
+      this.isTableOpen=false;
+    }
   }
 
   protected saveInternal(): any {
+      this.detailsForm.addControl('isActive', new FormControl(true));
     this.specialization.createSpecialization(this.detailsForm.getRawValue()).subscribe(x=>{
       if(x>0){
         this.showSuccess();

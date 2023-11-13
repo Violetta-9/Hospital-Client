@@ -112,7 +112,7 @@ export class ReceptionistService {
         const canConsumeForm = this.canConsumeForm(consumes);
 
         let formParams: { append(param: string, value: any): void; };
-        let useForm = false;
+        let useForm = canConsumeForm;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
         // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
@@ -200,7 +200,7 @@ export class ReceptionistService {
         const canConsumeForm = this.canConsumeForm(consumes);
 
         let formParams: { append(param: string, value: any): void; };
-        let useForm = false;
+        let useForm = canConsumeForm;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
@@ -414,7 +414,7 @@ export class ReceptionistService {
         const canConsumeForm = this.canConsumeForm(consumes);
 
         let formParams: { append(param: string, value: any): void; };
-        let useForm = false;
+        let useForm = canConsumeForm;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
