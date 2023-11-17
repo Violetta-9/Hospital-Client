@@ -64,14 +64,14 @@
       </mat-form-field>
     </div>
 
-    <div class="col-lg-9 row" >
+    <div class="col-lg-9 row" *ngIf="!editPersonalInfo" >
       <div class="col-lg-3">
         <mat-form-field appearance="outline" >
           <mat-label>Choosea photo</mat-label>
           <button mat-icon-button matSuffix >
             <mat-icon matSuffix>photo_camera</mat-icon>
           </button>
-          <ngx-mat-file-input formControlName="file" (change)="fileChangeEvent($event)" [disabled]="editPersonalInfo">
+          <ngx-mat-file-input formControlName="file" (change)="fileChangeEvent($event)">
           </ngx-mat-file-input>
         </mat-form-field>
       </div>

@@ -32,5 +32,8 @@ export class HeaderComponent implements OnInit {
 
     });
   }
+  public get isUserAuthorize(){
+    return localStorage.getItem('token')!==null;
+  }
 
 }

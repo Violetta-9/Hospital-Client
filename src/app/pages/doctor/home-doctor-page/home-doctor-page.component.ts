@@ -31,6 +31,7 @@ export class HomeDoctorPageComponent implements OnInit {
   localStorageKey="DOCTOR_FILTER"
   ngOnInit(): void {
     this.filterChanged$.asObservable().subscribe(x=>{
+
     let template=this.searchService.getFilter(this.localStorageKey)
       this.filterService.doctorFilter(template.fullName.firstName,template.fullName.lastName,template.fullName.middleName,template.specializationId,template.officeId).subscribe(x=>this.dataSource=x)
     })

@@ -2,7 +2,7 @@
 
   <div class="col-lg-2 me-lg-3">
     <img *ngIf="profileUser.documentAbsolutUrl!=undefined && profileUser.documentAbsolutUrl=='http://127.0.0.1:10000/devstoreaccount1/hospital-documents/' && newPhoto==undefined" src="/assets/user.png">
-    <img *ngIf="profileUser.documentAbsolutUrl!=undefined && profileUser.documentAbsolutUrl!='http://127.0.0.1:10000/devstoreaccount1/hospital-documents/' " [src]="profileUser.documentAbsolutUrl"  alt="">
+    <img *ngIf="profileUser.documentAbsolutUrl!=undefined && profileUser.documentAbsolutUrl!='http://127.0.0.1:10000/devstoreaccount1/hospital-documents/' && newPhoto==undefined " [src]="profileUser.documentAbsolutUrl"  alt="">
     <img *ngIf="newPhoto!=undefined" [src]="newPhoto">
   </div>
 

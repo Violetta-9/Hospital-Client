@@ -34,20 +34,14 @@
                    placeholder="Specialization"
                    dropdownPosition="top"
                    bindLabel="name" bindValue="id"
-                   class="col-12 pb-0 mt-2" [clearable]="false"
-                   [items]="[
-        {  id : 1 ,  name : 'Вольво'  } ,
-          {  id : 2 ,  name : 'Saab'  } ,
-          {  id : 3 ,  name : 'Opel'  } ,
-          {  id : 4 ,  name : 'Audi' } ,
-          ]">
-
-        </ng-select>zx
+                   class="col-12 pb-0 mt-2" [clearable]="false">
+          <ng-option *ngFor="let specialization of specializationInfo" [disabled]="!specialization.isActive" [value]="specialization.id">{{specialization.title}}</ng-option>
+        </ng-select>
 
         <ng-select formControlName="officeId"
                    placeholder="Office"
                    dropdownPosition="top"   class="col-12 pb-0 mt-2" [clearable]="false">
-          <ng-option *ngFor="let car of a" [disabled]="car.isActive" [value]="car.id">{{car.name}}</ng-option>
+          <ng-option *ngFor="let office of officeInfo" [disabled]="!office.isActive" [value]="office.id">{{office.address}}</ng-option>
         </ng-select>
 
 

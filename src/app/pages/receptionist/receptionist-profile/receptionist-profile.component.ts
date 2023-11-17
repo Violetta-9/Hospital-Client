@@ -24,7 +24,7 @@ public userRole='receptionist'
   }
 
   ngOnInit(): void {
-  console.log(1)
+
     this.route.queryParams
       .subscribe(params => {
           this.idFromQuery=params.id

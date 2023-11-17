@@ -36,9 +36,9 @@ public editPersonalInfo=true;
         firstName: new FormControl(this.userProfile.firstName, [Validators.maxLength(256), Validators.required]),
         lastName: new FormControl(this.userProfile.lastName, [Validators.maxLength(256), Validators.required]),
         middleName: new FormControl(this.userProfile.middleName, [Validators.maxLength(256), Validators.required]),
-        birthDate: new FormControl(this.userProfile.birthDay, [Validators.required]),
+        birthDate: new FormControl(this.userProfile.birthDay, [Validators.required],),
         phoneNumber: new FormControl(this.userProfile.phoneNumber, [Validators.maxLength(15), Validators.required]),
-      file: new FormControl(),
+        file: new FormControl(),
 
       }
     )

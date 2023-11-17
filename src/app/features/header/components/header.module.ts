@@ -7,7 +7,7 @@ import {MatInputModule} from "@angular/material/input";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {registerLocaleData} from "@angular/common";
+import { CommonModule, registerLocaleData } from "@angular/common";
 import localeEn from "@angular/common/locales/en";
 
 registerLocaleData(localeEn, 'en');
@@ -18,23 +18,24 @@ registerLocaleData(localeEn, 'en');
     HeaderComponent,
 
   ],
-  imports: [
-    RouterModule,
-    HttpClientModule,
-    NgbModule,
-    TranslateModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      useDefaultLang: true,
-      defaultLanguage: "en"
-    })
+    imports: [
+        RouterModule,
+        HttpClientModule,
+        NgbModule,
+        TranslateModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+            useDefaultLang: true,
+            defaultLanguage: "en"
+        }),
+        CommonModule
 
 
-  ],
+    ],
   exports: [
     HeaderComponent,
   ],

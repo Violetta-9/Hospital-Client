@@ -25,22 +25,21 @@ public editWorkInfo=true;
   }
 
   ngOnInit(): void {
-    this.getAllOffices();
+    this._createForm()
+
     if(this.userRole=="doctor"){
       this.getAllSpecialization()
     }
-
-    this._createForm()
-
   }
 
   private _createForm() {
     this.detailsForm = new FormGroup({
-      specializationId: new FormControl('0', [ Validators.required]),
-      officeId: new FormControl('', [ Validators.required]),
+      specializationId: new FormControl( [ Validators.required]),
+      officeId: new FormControl( [ Validators.required]),
 
       }
     )
+    this.getAllOffices();
   }
 
   protected saveInternal(): any {
@@ -50,12 +49,13 @@ public editWorkInfo=true;
     this.workDataForUpdating.emit(this.detailsForm.getRawValue())
   }
   private getAllOffices() {
+
     this.officeService.getAllOffices().subscribe(x=>{
-      let defValue=x.find(s=>s.address.toLowerCase()==this.userProfile.officeAddress.toLowerCase());
+      let defValue=x.find(s=>s.address.toLowerCase()==this.userProfile.officeAddress.toLowerCase()).id;
 
       this.offices=x;
-      this.detailsForm.get('officeId').setValue(defValue);
-    })
+       this.detailsForm.get('officeId').setValue(defValue);
+           })
   }
 
   private getAllSpecialization() {
