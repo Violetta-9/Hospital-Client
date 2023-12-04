@@ -9,6 +9,7 @@ import {ApiModule as ProfileApiModal, BASE_PATH as PROFILE_BASE_PATH} from "./co
 import {ApiModule as OfficeApiModal, BASE_PATH as OFFICE_BASE_PATH} from "./core/services/swagger-gen/office"
 import {ApiModule as SpecializationApiModal, BASE_PATH as SPECIALIZATION_BASE_PATH} from "./core/services/swagger-gen/specialization"
 import {ApiModule as ServiceApiModal, BASE_PATH as SERVICE_BASE_PATH} from "./core/services/swagger-gen/service"
+import {ApiModule as AppointmentApiModal, BASE_PATH as APPOINTMENT_BASE_PATH } from "./core/services/swagger-gen/appointment"
 import {environment} from "../environments/environment";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ErrorInterceptor} from "./core/interceptors/global-http-error-interceptor";
@@ -64,6 +65,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import { DoctorFilterComponent } from './features/doctors/doctor-filter/doctor-filter.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { HomeAppointmentPageComponent } from './home-appointment-page/home-appointment-page.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -79,6 +84,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     HomeServicesPageComponent,
     DoctorFilterComponent,
     CreateAppointmentComponent,
+    HomeAppointmentPageComponent,
 
 
 
@@ -86,36 +92,38 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
   ],
-  imports: [
+    imports: [
 
-    BrowserModule,
-    HeaderModule,
-    OfficeModal,
-    UserModal,
-    RegistrationUserFormModal,
-    NgbModule,
-    DoctorProfileModal,
-    AuthorizationApiModule,
-    ServiceApiModal,
-    ProfileApiModal,
-    OfficeApiModal,
-    SpecializationApiModal,
-    AppRoutingModule,
-    ServiceModal,
-    ReceptionistProfileModal,
-    FormUpdatePersonalInfoModal,
-    FormUpdateWorkInfoModal,
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    ModalDialogModal, PatientModule, ReceptionistModule, MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgSelectModule, MatButtonToggleModule
-  ],
+        BrowserModule,
+        HeaderModule,
+        OfficeModal,
+        UserModal,
+        RegistrationUserFormModal,
+        NgbModule,
+        DoctorProfileModal,
+        AuthorizationApiModule,
+        ServiceApiModal,
+        ProfileApiModal,
+        OfficeApiModal,
+        SpecializationApiModal,
+        AppointmentApiModal,
+        AppRoutingModule,
+        ServiceModal,
+        ReceptionistProfileModal,
+        FormUpdatePersonalInfoModal,
+        FormUpdateWorkInfoModal,
+        MatTableModule,
+        MatIconModule,
+        MatButtonModule,
+        ModalDialogModal, PatientModule, ReceptionistModule, MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgSelectModule, MatButtonToggleModule, MatStepperModule, MatDatepickerModule, MatSlideToggleModule
+    ],
   providers: [
     {provide: AUTHORIZATION_BASE_PATH, useValue: environment.authorizationUri},
     {provide: PROFILE_BASE_PATH, useValue: environment.profileUri},
     {provide: OFFICE_BASE_PATH, useValue: environment.officeUri},
     {provide: SPECIALIZATION_BASE_PATH, useValue: environment.specializationUri},
     {provide: SERVICE_BASE_PATH, useValue: environment.serviceUri},
+    {provide: APPOINTMENT_BASE_PATH, useValue: environment.appointmentUri},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],

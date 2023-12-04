@@ -27,6 +27,7 @@ import {HomePatientPageComponent} from "./pages/patient/home-patient-page/home-p
 import {CreatePatientComponent} from "./pages/patient/create-patient/create-patient.component";
 import {HomeManagementPageComponent} from "./pages/receptionist/home-management-page/home-management-page.component";
 import {CreateAppointmentComponent} from "./create-appointment/create-appointment.component";
+import { HomeAppointmentPageComponent } from './home-appointment-page/home-appointment-page.component';
 const itemRoutes: Routes = [
   { path: 'page/service', component: HomeServicesPageComponent },
   { path: 'service/create', component: CreateServiceComponent },
@@ -50,6 +51,7 @@ const itemRoutes: Routes = [
   { path: 'specialization/create', component: CreateSpecializationComponent },
 
 
+  { path: 'page/appointments', component: HomeAppointmentPageComponent },
 ]
 
 const routes: Routes = [

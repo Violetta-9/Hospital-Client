@@ -1,3 +1,9 @@
 .group {
   display: -ms-inline-grid;
 }
+.try{
+  height: auto;
+}
+:host ::ng-deep .mat-horizontal-content-container {
+  overflow: visible ;
+}
