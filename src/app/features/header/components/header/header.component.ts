@@ -24,16 +24,15 @@ export class HeaderComponent implements OnInit {
     });
   }
   openRegistrationDialog(){
-    console.log("op Work")
     const dialogRef = this.dialog.open(RegistrationModalComponent);
-    console.log("op Work end")
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
     });
   }
   public get isUserAuthorize(){
     return localStorage.getItem('token')!==null;
   }
 
+  logOut() {
+    localStorage.clear();
+  }
 }

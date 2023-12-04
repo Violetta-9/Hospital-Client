@@ -8,7 +8,8 @@ export const environment = {
   profileUri:"https://localhost:7131",
   officeUri:"https://localhost:7257",
   specializationUri:"https://localhost:7165",
-  serviceUri:"https://localhost:7246"
+  serviceUri:"https://localhost:7246",
+  appointmentUri:"https://localhost:7156"
 };
 
 /*

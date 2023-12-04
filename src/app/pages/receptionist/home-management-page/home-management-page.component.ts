@@ -17,7 +17,8 @@ export class HomeManagementPageComponent implements OnInit {
     {id:2,title:"Doctors",link:"page/doctor"},
     {id:3,title:"Receptionists",link:"page/receptionist"},
     {id:4,title:"Patients",link:"page/patient"},
-    {id:5,title:"Specializations",link:"page/specialization"}
+    {id:5,title:"Specializations",link:"page/specialization"},
+    {id:5,title:"Appointments",link:"page/appointments"}
   ]
 
   activeLink = 'menu';
