@@ -49,11 +49,8 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
       this.detailsForm.get('email').value,
        this.detailsForm.get('password').value
     ).subscribe(x=>{
-      console.log(x);
       if(x){
-        console.log("mau");
         const f=jwt_decode(x)
-        console.log(f)
         // @ts-ignore
         if(f.role.includes("Receptionist")) {
 

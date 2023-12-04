@@ -249,7 +249,7 @@ export class ServiceService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<OutServicesDto>>('get',`${this.basePath}/api/Service/specialization`,
+        return this.httpClient.request<Array<OutServicesDto>>('get',`${this.basePath}/api/Service/service`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

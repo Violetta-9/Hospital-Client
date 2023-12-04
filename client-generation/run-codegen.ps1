@@ -1,1 +1,1 @@
-java -jar swagger-codegen-cli-3.0.20.jar generate -i http://localhost:7246/swagger/v1/swagger.json -l typescript-angular -o src/app/core/services/swagger-gen/service --additional-properties ngVersion=14  
+java -jar swagger-codegen-cli-3.0.20.jar generate -i http://localhost:7156/swagger/v1/swagger.json -l typescript-angular -o src/app/core/services/swagger-gen/appointment --additional-properties ngVersion=14  
