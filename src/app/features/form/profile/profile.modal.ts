@@ -12,6 +12,9 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormUpdatePersonalInfoModal} from "../form-update-personal-info/form-update-personal-info.modal";
 import {FormUpdateWorkInfoModal} from "../form-update-work-info/form-update-work-info-modal";
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -20,21 +23,24 @@ import {FormUpdateWorkInfoModal} from "../form-update-work-info/form-update-work
   declarations: [
     ProfileComponent
   ],
-  imports: [
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    TranslateModule,
-    MatDatepickerModule,
-    CommonModule,
-    MatInputModule,
-    MatButtonModule,
-    FormUpdatePersonalInfoModal,
-    FormUpdateWorkInfoModal,
+    imports: [
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        TranslateModule,
+        MatDatepickerModule,
+        CommonModule,
+        MatInputModule,
+        MatButtonModule,
+        FormUpdatePersonalInfoModal,
+        FormUpdateWorkInfoModal,
+        MatTreeModule,
+        MatIconModule,
+        MatTableModule,
 
 
-  ],
+    ],
   exports: [
     ProfileComponent,
   ],

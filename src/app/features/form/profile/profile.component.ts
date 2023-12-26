@@ -2,12 +2,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { EntityDetailsBaseComponent } from "../../../core/components/abstraction/entity-detail-base.component";
 import { emailValidators } from "../../../shared/validators/emailValidator";
-import { DoctorService, StatusService } from "../../../core/services/swagger-gen/profile";
+import {
+  DoctorService, IAppointmentForPatientDto, IResultDto,
+  IResultForPatient,
+  IServiceForPatientResultDto,
+  StatusService
+} from "../../../core/services/swagger-gen/profile";
 import { MatSelectChange } from "@angular/material/select";
 import { AddImageToAvatarService } from "../../../core/services/manage-photo/add-image-to-avatar.service";
 import { MatDialog } from "@angular/material/dialog";
 import { DeleteConfirmComponent } from "../../../shared/modals/delete-confirm/delete-confirm.component";
 import { DeletePersonService } from "../../../core/services/manage-delete/delete-person.service";
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
+import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { AppointmentService } from '../../../core/services/swagger-gen/appointment';
+import { RescheduleAppointmenDialog } from '../../../reschedule-appointment/reschedule-appointment.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,19 +33,60 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
   @Output() doctorStatus = new EventEmitter();
   public newPhoto;
   panelOpenState = false;
+  displayedColumns: string[] = ['doctor', 'date', 'service', 'action'];
+  dataSourceTable;
+
+  private _transformer = (node: any, level: number) => {
+    let name;
+    if (node.doctorFullName != undefined) {
+      name = `${node.doctorFullName} ${node.date}`
+    } else if (node.absoluteUrl != undefined) {
+      name = `<a class="text-primary" style="cursor: pointer;" href="${node.absoluteUrl}" >${node.fileTitle}<a/>`
+    } else {
+      name = node.title
+    }
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: name,
+      level: level,
+    };
+  };
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
 
   constructor(public statusService: StatusService,
               public doctorService: DoctorService,
               public addImageToAvatar: AddImageToAvatarService,
               public dialog: MatDialog,
-              public deletePersonService: DeletePersonService) {
+              public deletePersonService: DeletePersonService, private readonly appointmentService: AppointmentService) {
     super();
+
     this.getStatuses();
   }
 
   ngOnInit(): void {
     this.addImageToAvatar.addImageTrigger.subscribe(x => this.newPhoto = x)
     this.addImageToAvatar.deleteImageTrigger.subscribe(x => this.newPhoto = x)
+    if (this.userRole == 'patient') {
+      this.dataSource.data = this.profileUser?.results;
+      this.appointmentService.getAppointmentListForPatient(+localStorage.getItem('id')).subscribe(x => this.dataSourceTable = x);
+    }
     this._createForm();
 
 
@@ -75,7 +125,6 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
   }
 
   onSelect($event: MatSelectChange) {
-    console.log($event.value)
     this.doctorStatus.emit($event.value);
 
   }
@@ -94,4 +143,26 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
     });
 
   }
+
+  rescheduleAppointment(element) {
+    this.doctorService.getDoctorsBySpecializationId(element.specializationId)
+      .subscribe(doctors => {
+        this.dialog.open(RescheduleAppointmenDialog, {
+          data: {
+            doctors: doctors,
+            appointmentId: element.appointmentId,
+            patientId: +localStorage.getItem('id')
+          }
+        }).afterClosed().subscribe(result => {
+         this.dataSourceTable = [...result];
+
+        });
+      });
+  }
+}
+
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
 }
