@@ -15,7 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 export class OfficePageComponent extends EntityDetailsBaseComponent implements OnInit {
 public office :OfficeDto;
   panelOpenState = false;
-  editInfo=true;
+  editInfo = true;
+  hasAccess:boolean = false;
   constructor(public officeService:OfficeService,
               private toastr: ToastrService,
               private translate:TranslateService,private route: ActivatedRoute) {
@@ -23,18 +24,34 @@ public office :OfficeDto;
   }
 
   ngOnInit(): void {
+    debugger
+    const roles = localStorage.getItem('role');
+    if (roles) {
+      const rolesArray = roles.split(',');
+      rolesArray.splice(rolesArray.indexOf('User'), 1)
+      if (rolesArray[0] == 'Receptionist') {
+        this.hasAccess = true
+      }
+    }
+    this.route.data.subscribe(({ office }) => {
+      this.detailsForm = new FormGroup({
+        address: new FormControl(office.address, [Validators.maxLength(256), Validators.required]),
+        registryPhoneNumber: new FormControl(office.registryPhoneNumber, [Validators.maxLength(256), Validators.required]),
+      })
+      this.office = office
+    })
+
     this.route.queryParams.subscribe(params => {
         this.officeService.getOfficeById(params.id).subscribe(y=>{
           this.detailsForm = new FormGroup({
             address: new FormControl(y.address, [Validators.maxLength(256), Validators.required]),
             registryPhoneNumber: new FormControl(y.registryPhoneNumber, [Validators.maxLength(256), Validators.required]),
           })
-          console.log(this.detailsForm);
           this.office = y
         })
 
       }
-    );
+   );
 
   }
   private _createForm() {

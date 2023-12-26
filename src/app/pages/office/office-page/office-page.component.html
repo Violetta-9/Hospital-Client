@@ -1,4 +1,4 @@
-<div *ngIf="office?.id &&detailsForm.controls != {}" class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
+<div *ngIf="office?.id && detailsForm.controls != {}" class="ms-lg-5 ps-lg-5 mt-lg-5 col-lg-12 row" >
 
   <div class="col-lg-2 me-lg-3">
 
@@ -29,8 +29,8 @@
         </div>
       </div>
 
-      <div  class="col-lg-2 mt-lg-1 ">
-        <mat-radio-group  aria-label="Select an option" class="row" [value]="office.isActive.toString()" (change)="updateStatus($event)" >
+      <div class="col-lg-2 mt-lg-1">
+        <mat-radio-group [disabled]="!hasAccess"  aria-label="Select an option" class="row" [value]="office.isActive.toString()" (change)="updateStatus($event)" >
           <mat-radio-button value="true"  color="primary" >Active</mat-radio-button>
           <mat-radio-button class="mt-lg-1" value="false" color="warn">Inactive</mat-radio-button>
         </mat-radio-group>
@@ -44,7 +44,7 @@
 
 
 <mat-expansion-panel  class="mt-lg-4" (opened)="panelOpenState = true"
-                     (closed)="panelOpenState = false">
+                     (closed)="panelOpenState = false"  *ngIf="hasAccess">
   <mat-expansion-panel-header>
     <mat-panel-title class="h6">
       Office information
