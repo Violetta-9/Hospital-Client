@@ -1,8 +1,105 @@
+<mat-stepper orientation="horizontal" [linear]="isLinear" [formGroup]="detailsForm" #stepper>
+  <mat-step [stepControl]="detailsForm.get('firstFormGroup')">
+    <form formGroupName="firstFormGroup" class="try">
+      <ng-template matStepLabel>
+        Сhoose an office
+      </ng-template>
+      <ng-select formControlName="officeId"
+                 placeholder="Office"
+                 dropdownPosition="bottom" class="col-2 pb-0 mt-2 try" [clearable]="false">
+        <ng-option *ngFor="let office of offices" [value]="office.id">{{office.address}}</ng-option>
+      </ng-select>
+      <div>
+        <button mat-button matStepperNext [disabled]="f.firstFormGroup.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+
+  <mat-step [stepControl]="detailsForm.get('secondFormGroup')">
+    <form formGroupName="secondFormGroup">
+      <ng-template matStepLabel>Сhoose a specialization</ng-template>
+      <ng-select formControlName="specializationId"
+                 placeholder="Specialization"
+                 dropdownPosition="bottom"
+                 (ngModelChange)="onSpecializationChange($event)"
+                 class="col-2 pb-0 mt-2" [clearable]="false">
+        <ng-option *ngFor="let specialization of specializations"
+                   [value]="specialization.id">{{specialization.title}}</ng-option>
+      </ng-select>
+      <ng-select formControlName="serviceId"
+                 placeholder="Service"
+                 dropdownPosition="bottom" class="col-2 pb-0 mt-2" [clearable]="false">
+        <ng-option *ngFor="let service of services" [value]="service.id">{{service.title}}</ng-option>
+      </ng-select>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="f.secondFormGroup.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="detailsForm.get('thirdFormGroup')">
+    <form formGroupName="thirdFormGroup">
+      <ng-template matStepLabel>Сhoose a doctor</ng-template>
+      <ng-select formControlName="doctorId"
+                 placeholder="Doctors"
+                 dropdownPosition="top" class="col-2 pb-0 mt-2" [clearable]="false">
+        <ng-option *ngFor="let doctor of doctors"
+                   [value]="doctor.id">{{doctor.firstName}} {{doctor.lastName}} {{doctor.middleName}}</ng-option>
+      </ng-select>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="f.thirdFormGroup.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="detailsForm.get('fourthFormGroup')">
+    <form formGroupName="fourthFormGroup">
+      <ng-template matStepLabel>Сhoose a data</ng-template>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Choose a date" (dateChange)="updateTimeSlots($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+        <mat-button-toggle-group formControlName="time">
+          <mat-button-toggle *ngFor="let time of timeSlots" [value]="time">{{time}}</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext [disabled]="f.fourthFormGroup.invalid">Next</button>
+        </div>
+
+    </form>
+  </mat-step>
+
+    <mat-step [stepControl]="detailsForm.get('fifthFormGroup')">
+      <form formGroupName="fifthFormGroup">
+        <ng-container *ngIf="isPatient;else receptionistTemp">
+          <ng-template matStepLabel>You are</ng-template>
+          <p> {{patient?.firstName}} {{patient?.lastName}} {{patient?.middleName}}</p>
+          <button mat-raised-button color="primary" (click)="confirmPerson()" [disabled]="isConfirm" >Yes</button>
+        </ng-container>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="f.fifthFormGroup.invalid" (click)="save()">Submit</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+
+<ng-template #receptionistTemp>
+  <ng-select formControlName="patientId"
+             placeholder="Patients"
+             dropdownPosition="top" class="col-2 pb-0 mt-2" [clearable]="false">
+    <ng-option *ngFor="let patient of patients"
+               [value]="patient.id">{{patient?.firstName}} {{patient?.lastName}} {{patient?.middleName}}</ng-option>
+  </ng-select>
+</ng-template>
+      </form>
+    </mat-step>
+</mat-stepper>
 
 
 
 
-<mat-button-toggle-group>
-  <mat-button-toggle  *ngFor="let time of timeSlots" value="bold" disabled="true">{{time}}</mat-button-toggle>
 
-</mat-button-toggle-group>

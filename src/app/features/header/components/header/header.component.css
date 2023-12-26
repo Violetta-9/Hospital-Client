@@ -133,6 +133,14 @@ a:hover,
   left: 12px;
   position: absolute;
 }
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-left: 5px; /* Регулируйте отступ справа от названия офиса по вашему усмотрению */
+  display: inline-block;
+  margin-bottom: 4px;
+}
 
 /* #Primary style
 ================================================== */

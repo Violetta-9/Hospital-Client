@@ -12,6 +12,7 @@
 
 export interface Body2 { 
     appointmentId?: number;
+    patientId?: number;
     doctorId?: number;
     dataTime?: Date;
 }
