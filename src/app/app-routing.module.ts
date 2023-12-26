@@ -28,12 +28,23 @@ import {CreatePatientComponent} from "./pages/patient/create-patient/create-pati
 import {HomeManagementPageComponent} from "./pages/receptionist/home-management-page/home-management-page.component";
 import {CreateAppointmentComponent} from "./create-appointment/create-appointment.component";
 import { HomeAppointmentPageComponent } from './home-appointment-page/home-appointment-page.component';
-const itemRoutes: Routes = [
+import { ResultPageComponent } from './result-page/result-page.component';
+import { AuthReceptionistGuard } from './guards/auth.receptionist.guards';
+import { AuthDoctorGuard } from './guards/auth.doctor.guards';
+import { AuthPatientGuards } from './guards/auth.patient.guards';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { OfficeResolver } from './guards/office.resolver';
+import { ServicePreViewComponent } from './service-pre-view/service-pre-view.component';
+import { DoctorsPreViewComponent } from './doctors-pre-view/doctors-pre-view.component';
+const itemReceptionistRoutes: Routes = [
   { path: 'page/service', component: HomeServicesPageComponent },
   { path: 'service/create', component: CreateServiceComponent },
 
-  { path: 'page/office', component: HomeOfficePageComponent },
-  { path: 'office/create', component: CreateOfficeComponent },
+  { path: 'page/office',   component: HomeOfficePageComponent },
+  { path: 'office/create',  component: CreateOfficeComponent },
+  { path: 'office/:id', resolve:{ office: OfficeResolver}, component: OfficePageComponent },
+
 
   { path: 'receptionist/profile', component: ReceptionistProfileComponent },
   { path: 'page/receptionist', component: HomeReceptionistPageComponent },
@@ -52,23 +63,51 @@ const itemRoutes: Routes = [
 
 
   { path: 'page/appointments', component: HomeAppointmentPageComponent },
+  { path: 'appointment', component: CreateAppointmentComponent },
 ]
-
-const routes: Routes = [
-
+const itemDocRoutes: Routes = [
 
   { path: 'doctor/profile', component: DoctorProfileComponent },
-  { path: 'appointment', component: CreateAppointmentComponent },
-  { path: 'receptionist/profile', component: ReceptionistProfileComponent },
-  { path: 'management', component: HomeManagementPageComponent,children:itemRoutes },
 
-  { path: 'office', component: OfficePageComponent },
+  { path: 'patient/profile', component: PatientProfileComponent },
+
+  { path: 'page/appointments', component: HomeAppointmentPageComponent },
+
+  { path: 'page/result',  component: ResultPageComponent },
+]
+const itemPatientRoutes: Routes = [
+
+  { path: 'appointment', component: CreateAppointmentComponent },
+  { path: 'patient/profile', component: PatientProfileComponent },
+
+]
+const homeRoutes: Routes = [
+  { path: 'home',  component: HomePageComponent },
+    { path: 'about', component: AboutUsComponent },
+    { path: 'services', component: ServicePreViewComponent },
+    { path: 'doctors', component: DoctorsPreViewComponent },
+    { path: 'office/:id', resolve:{ office: OfficeResolver}, component: OfficePageComponent },
+
+]
+const routes: Routes = [
+
+  //
+  // { path: 'doctor/profile', component: DoctorProfileComponent },
+  //
+  // { path: 'receptionist/profile', component: ReceptionistProfileComponent },
+  { path: 'management/receptionist', component: HomeManagementPageComponent,canActivate: [AuthReceptionistGuard], canActivateChild:[AuthReceptionistGuard], children:itemReceptionistRoutes },
+  { path: 'management/patient', component: HomeManagementPageComponent, canActivate: [AuthPatientGuards], canActivateChild:[AuthPatientGuards],children:itemPatientRoutes },
+  { path: 'management/doctor', component: HomeManagementPageComponent, canActivate: [AuthDoctorGuard], canActivateChild:[AuthDoctorGuard], children:itemDocRoutes },
   { path: 'specialization', component: SpecializationPageComponent },
   { path: 'service', component: ServicePageComponent },
+
+
+  { path: '',  children: homeRoutes },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthReceptionistGuard,AuthDoctorGuard,AuthPatientGuards]
 })
 export class AppRoutingModule { }

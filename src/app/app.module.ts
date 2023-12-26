@@ -69,11 +69,15 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HomeAppointmentPageComponent } from './home-appointment-page/home-appointment-page.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
-
-
-
-
+import { ResultPageComponent } from './result-page/result-page.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { RescheduleAppointmenDialog } from './reschedule-appointment/reschedule-appointment.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { MatCardModule } from '@angular/material/card';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ServicePreViewComponent } from './service-pre-view/service-pre-view.component';
+import { CartComponent } from './cart/cart.component';
+import { DoctorsPreViewComponent } from './doctors-pre-view/doctors-pre-view.component';
 
 
 @NgModule({
@@ -85,38 +89,41 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DoctorFilterComponent,
     CreateAppointmentComponent,
     HomeAppointmentPageComponent,
-
-
-
-
+    ResultPageComponent,
+    RescheduleAppointmenDialog,
+    AboutUsComponent,
+    HomePageComponent,
+    ServicePreViewComponent,
+    CartComponent,
+    DoctorsPreViewComponent
 
 
   ],
-    imports: [
+  imports: [
 
-        BrowserModule,
-        HeaderModule,
-        OfficeModal,
-        UserModal,
-        RegistrationUserFormModal,
-        NgbModule,
-        DoctorProfileModal,
-        AuthorizationApiModule,
-        ServiceApiModal,
-        ProfileApiModal,
-        OfficeApiModal,
-        SpecializationApiModal,
-        AppointmentApiModal,
-        AppRoutingModule,
-        ServiceModal,
-        ReceptionistProfileModal,
-        FormUpdatePersonalInfoModal,
-        FormUpdateWorkInfoModal,
-        MatTableModule,
-        MatIconModule,
-        MatButtonModule,
-        ModalDialogModal, PatientModule, ReceptionistModule, MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgSelectModule, MatButtonToggleModule, MatStepperModule, MatDatepickerModule, MatSlideToggleModule
-    ],
+    BrowserModule,
+    HeaderModule,
+    OfficeModal,
+    UserModal,
+    RegistrationUserFormModal,
+    NgbModule,
+    DoctorProfileModal,
+    AuthorizationApiModule,
+    ServiceApiModal,
+    ProfileApiModal,
+    OfficeApiModal,
+    SpecializationApiModal,
+    AppointmentApiModal,
+    AppRoutingModule,
+    ServiceModal,
+    ReceptionistProfileModal,
+    FormUpdatePersonalInfoModal,
+    FormUpdateWorkInfoModal,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    ModalDialogModal, PatientModule, ReceptionistModule, MatExpansionModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgSelectModule, MatButtonToggleModule, MatStepperModule, MatDatepickerModule, MatSlideToggleModule, TranslateModule, MatCardModule
+  ],
   providers: [
     {provide: AUTHORIZATION_BASE_PATH, useValue: environment.authorizationUri},
     {provide: PROFILE_BASE_PATH, useValue: environment.profileUri},

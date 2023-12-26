@@ -19,4 +19,5 @@ export interface AppointmentScheduleForReceptionistDTO {
     serviceName?: string;
     specializationName?: string;
     isApprove?: boolean;
+    patientId?: number;
 }

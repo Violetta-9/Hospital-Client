@@ -14,4 +14,7 @@ export interface AppointmentHistoryDTO {
     dateTime?: Date;
     doctorFullName?: string;
     serviceName?: string;
+    isApprove?: boolean;
+    specializationId?: number;
+    appointmentId?: number;
 }

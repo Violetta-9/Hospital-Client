@@ -20,6 +20,8 @@ import { Observable }                                        from 'rxjs';
 import { AppointmentHistoryDTO } from '../model/appointmentHistoryDTO';
 import { AppointmentScheduleForDoctorDTO } from '../model/appointmentScheduleForDoctorDTO';
 import { AppointmentScheduleForReceptionistDTO } from '../model/appointmentScheduleForReceptionistDTO';
+import { BusyTimeSlotsDto } from '../model/busyTimeSlotsDto';
+import { CreateAppointmentResultDto } from '../model/createAppointmentResultDto';
 import { Response } from '../model/response';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -266,12 +268,67 @@ export class AppointmentService {
             formParams = formParams.append('OfficeId', <any>officeId) as any || formParams;
         }
         if (dateTime !== undefined) {
-            formParams = formParams.append('DateTime', <any>dateTime) as any || formParams;
+            formParams = formParams.append('DateTime', <any>dateTime.toLocaleString()) as any || formParams;
         }
 
         return this.httpClient.request<number>('post',`${this.basePath}/api/Appointment`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Create Appointment Result
+     *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'body', reportProgress?: boolean): Observable<Array<AppointmentHistoryDTO>>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AppointmentHistoryDTO>>>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AppointmentHistoryDTO>>>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<Array<AppointmentHistoryDTO>>('post',`${this.basePath}/api/Appointment/result`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -300,7 +357,7 @@ export class AppointmentService {
             queryParameters = queryParameters.set('doctorId', <any>doctorId);
         }
         if (dataTime !== undefined && dataTime !== null) {
-            queryParameters = queryParameters.set('dataTime', <any>dataTime.toISOString());
+            queryParameters = queryParameters.set('dataTime', <any>dataTime.toLocaleString());
         }
 
         let headers = this.defaultHeaders;
@@ -404,14 +461,14 @@ export class AppointmentService {
     public getAppointmentListForReceptionist(officeId?: number, dataTime?: Date, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AppointmentScheduleForReceptionistDTO>>>;
     public getAppointmentListForReceptionist(officeId?: number, dataTime?: Date, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-      dataTime.setDate(dataTime.getDate() + 1)
+
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (officeId !== undefined && officeId !== null) {
             queryParameters = queryParameters.set('officeId', <any>officeId);
         }
         if (dataTime !== undefined && dataTime !== null) {
-            queryParameters = queryParameters.set('dataTime', <any>dataTime.toISOString());
+            queryParameters = queryParameters.set('dataTime', <any>dataTime.toLocaleString());
         }
 
         let headers = this.defaultHeaders;
@@ -450,20 +507,76 @@ export class AppointmentService {
     }
 
     /**
+     * Get busy time slots
+     *
+     * @param doctorId
+     * @param data
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getBusyTimeSlot(doctorId?: number, data?: Date, observe?: 'body', reportProgress?: boolean): Observable<Array<BusyTimeSlotsDto>>;
+    public getBusyTimeSlot(doctorId?: number, data?: Date, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BusyTimeSlotsDto>>>;
+    public getBusyTimeSlot(doctorId?: number, data?: Date, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BusyTimeSlotsDto>>>;
+    public getBusyTimeSlot(doctorId?: number, data?: Date, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+      data.setDate(data.getDate() + 1)
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (doctorId !== undefined && doctorId !== null) {
+            queryParameters = queryParameters.set('doctorId', <any>doctorId);
+        }
+        if (data !== undefined && data !== null) {
+            queryParameters = queryParameters.set('data', <any>data.toISOString());
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<BusyTimeSlotsDto>>('get',`${this.basePath}/api/Appointment/busy`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Reschedule Appointment
      *
      * @param appointmentId
+     * @param patientId
      * @param doctorId
      * @param dataTime
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public rescheduleAppointmentForm(appointmentId?: number, doctorId?: number, dataTime?: Date, observe?: 'body', reportProgress?: boolean): Observable<Response>;
-    public rescheduleAppointmentForm(appointmentId?: number, doctorId?: number, dataTime?: Date, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
-    public rescheduleAppointmentForm(appointmentId?: number, doctorId?: number, dataTime?: Date, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
-    public rescheduleAppointmentForm(appointmentId?: number, doctorId?: number, dataTime?: Date, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
+    public rescheduleAppointmentForm(appointmentId?: number, patientId?: number, doctorId?: number, dataTime?: Date, observe?: 'body', reportProgress?: boolean): Observable<Array<AppointmentHistoryDTO>>;
+    public rescheduleAppointmentForm(appointmentId?: number, patientId?: number, doctorId?: number, dataTime?: Date, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AppointmentHistoryDTO>>>;
+    public rescheduleAppointmentForm(appointmentId?: number, patientId?: number, doctorId?: number, dataTime?: Date, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AppointmentHistoryDTO>>>;
+    public rescheduleAppointmentForm(appointmentId?: number, patientId?: number, doctorId?: number, dataTime?: Date, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -505,14 +618,17 @@ export class AppointmentService {
         if (appointmentId !== undefined) {
             formParams = formParams.append('AppointmentId', <any>appointmentId) as any || formParams;
         }
+        if (patientId !== undefined) {
+            formParams = formParams.append('PatientId', <any>patientId) as any || formParams;
+        }
         if (doctorId !== undefined) {
             formParams = formParams.append('DoctorId', <any>doctorId) as any || formParams;
         }
         if (dataTime !== undefined) {
-            formParams = formParams.append('DataTime', <any>dataTime) as any || formParams;
+            formParams = formParams.append('DataTime', <any>dataTime.toLocaleString()) as any || formParams;
         }
 
-        return this.httpClient.request<Response>('patch',`${this.basePath}/api/Appointment`,
+        return this.httpClient.request<Array<AppointmentHistoryDTO>>('patch',`${this.basePath}/api/Appointment`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

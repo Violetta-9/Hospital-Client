@@ -15,5 +15,8 @@ export interface AppointmentScheduleForDoctorDTO {
     dateTime?: Date;
     patientFullName?: string;
     serviceName?: string;
+    specializationName?: string;
     approvedStatus?: boolean;
+    resultId?: number;
+    patientId?: number;
 }
