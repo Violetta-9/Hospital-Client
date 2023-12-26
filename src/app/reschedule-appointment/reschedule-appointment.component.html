@@ -1,0 +1,19 @@
+<form [formGroup]="detailsForm">
+  <ng-template>Сhoose a doctor</ng-template>
+  <ng-select formControlName="doctorId"
+             placeholder="Doctors"
+             dropdownPosition="top" class="col-2 pb-0 mt-2" [clearable]="false">
+    <ng-option *ngFor="let doctor of data.doctors"
+               [value]="doctor.id">{{doctor.firstName}} {{doctor.lastName}} {{doctor.middleName}}</ng-option>
+  </ng-select>
+  <ng-template>Сhoose a data</ng-template>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Choose a date" (dateChange)="updateTimeSlots($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-button-toggle-group formControlName="time">
+    <mat-button-toggle *ngFor="let time of timeSlots" [value]="time">{{time}}</mat-button-toggle>
+  </mat-button-toggle-group>
+  <button mat-button  [disabled]="detailsForm.invalid" (click)="save()">Submit</button>
+</form>

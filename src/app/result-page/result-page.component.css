@@ -1,0 +1,15 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.patient-title{
+  font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  text-transform: lowercase;
+  color: gray;position: absolute;
+}
