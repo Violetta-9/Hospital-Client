@@ -29,9 +29,8 @@ export class HomeOfficePageComponent implements OnInit {
   }
 
   linkTo(row) {
-    console.log(row);
-    //this.router.navigate(["office"], navigationExtras);
-   this.router.navigate(["office"], { queryParams: { id: row.id } });
+
+   this.router.navigate(["../office", row.id]);
   }
 
   createOffice() {

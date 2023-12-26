@@ -10,6 +10,7 @@ import {
   SearchConditionBase,
   SearchConditionCacheService
 } from "../../../../core/services/search-condition-cache-service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
@@ -26,7 +27,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
               private doctorService:DoctorService,
               private receptionistService:ReceptionistService,
               private patientService:PatientService,
-             private searchConditionCacheService: SearchConditionCacheService<SearchConditionBase>
+             private searchConditionCacheService: SearchConditionCacheService<SearchConditionBase>,private router: Router
 
   ) {
     super();
@@ -48,12 +49,12 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
     this.authorizationApi.loginForm(
       this.detailsForm.get('email').value,
        this.detailsForm.get('password').value
-    ).subscribe(x=>{
+    ).subscribe( async x=>{
+
       if(x){
         const f=jwt_decode(x)
         // @ts-ignore
         if(f.role.includes("Receptionist")) {
-
           this.dialogRef.close();
           localStorage.setItem('token', x);
           // @ts-ignore
@@ -62,6 +63,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           // @ts-ignore
           this.receptionistService.getReceptionistIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
+         await this.router.navigate(['/management/receptionist']);
         }
         // @ts-ignore
         else if(f.role.includes("Doctor")) {
@@ -73,6 +75,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           // @ts-ignore
           this.doctorService.getDoctorIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
+         await this.router.navigate(['/management/doctor']);
         }
         // @ts-ignore
        else if(f.role.includes("Patient")) {
@@ -84,8 +87,8 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           // @ts-ignore
           this.patientService.getPatientIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
+          await this.router.navigate(['/management/patient']);
         }
-
       else {
           this.dialogRef.close();
           localStorage.setItem('token', x);
@@ -93,8 +96,9 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           localStorage.setItem('role', f.role);
           this.showSuccessForUser();
         }
+
         }
-    })
+    },error => console.log(111)) //todo
   }
   showSuccessForDoctor() {
     this.toastr.success('You have successfully logged in to your account as Doctor', 'Success!');

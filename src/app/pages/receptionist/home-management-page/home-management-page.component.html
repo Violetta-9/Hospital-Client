@@ -10,10 +10,10 @@
       <mat-icon color="warn" aria-label="Example icon-button with a heart icon">more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button *ngFor="let link of info" mat-menu-item (click)="changeTab(link.id)" [routerLink]="link.link">{{link.title}}</button>
+      <button *ngFor="let link of getInfo" mat-menu-item (click)="changeTab(link.id)" [routerLink]="link.link">{{link.title}}</button>
     </mat-menu>
   </a>
-  <a mat-tab-link *ngFor="let link of info"
+  <a mat-tab-link *ngFor="let link of getInfo"
      (click)="activeLink = link.title"
      [active]="activeLink == link.title"
      [routerLink]="link.link"
