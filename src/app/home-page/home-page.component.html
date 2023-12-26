@@ -1,0 +1,12 @@
+<div class="instruction-container">
+  <div class="steps">
+    <div class="step" *ngFor="let step of steps; let i = index">
+      <div class="d-flex flex-column">
+        <div class="circle">{{ i + 1 }}</div>
+        <div class="line" *ngIf="i < steps.length - 1"></div>
+      </div>
+
+      <div class="step-text">{{ step }}</div>
+    </div>
+  </div>
+</div>

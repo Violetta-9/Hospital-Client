@@ -1,0 +1,41 @@
+.instruction-container {
+  display: flex;
+  margin: 2em auto;
+ justify-content: center;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: flex;
+
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #3498db; /* Circle color */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.line {
+  height: 30px;
+  width: 2px;
+  background-color: #3498db; /* Line color */
+  margin-right: 10px;
+  margin-left: 23px;
+}
+
+.step-text {
+  margin: 5px;
+  font-size: 16px;
+}

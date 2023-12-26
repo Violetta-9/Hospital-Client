@@ -1,0 +1,18 @@
+
+<ng-container *ngFor="let doc of doctors" >
+  <app-cart >
+    <div head class="d-flex flex-row gap-5">
+      <div>
+        <img *ngIf="doc.documentAbsolutUrl!=undefined && doc.documentAbsolutUrl!='http://127.0.0.1:10000/devstoreaccount1/hospital-documents/'"  [src]="doc.documentAbsolutUrl"  alt="">
+      </div>
+      <span class="header mt-4" style="font-weight: bold; font-size: larger;color:dimgrey">{{doc.firstName}} {{doc.lastName}} {{doc.middleName}}
+      </span>
+      <div class="header d-flex justify-content-center mt-4" style="color: dimgrey">Specialization: {{doc.specializationTitle}}</div>
+      <div class="header d-flex justify-content-center mt-4" style="color: dimgrey">Office: {{doc.officeAddress}}</div>
+    </div>
+
+
+  </app-cart>
+</ng-container>
+
+
