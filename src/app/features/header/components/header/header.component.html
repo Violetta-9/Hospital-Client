@@ -17,28 +17,30 @@
                id="navbarSupportedContent">
             <ul class="navbar-nav mt-10px">
               <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4" ngbDropdown>
-                <a class="nav-link " >{{'HEADER.HOME' |translate}}</a>
+                <a class="nav-link"  routerLink="home" >{{'HEADER.HOME' |translate}}</a>
 
               </li>
               <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                <a class="nav-link" >{{'HEADER.ABOUTUS' | translate}}</a>
+                <a class="nav-link" routerLink="about">{{'HEADER.ABOUTUS' | translate}}</a>
               </li>
 
 
               <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4" ngbDropdown>
                 <span class="nav-link dropdown-toggle" ngbDropdownToggle>{{'HEADER.OFFICES' | translate}}</span>
                 <div class="dropdown-menu" >
-<!--                  <a class="dropdown-item" *ngFor="let menuItem of categories"  routerLink="/category/{{menuItem.id}}">-->
-<!--                    <span>{{menuItem.title}}</span>-->
-<!--                  </a>-->
+                  <a class="dropdown-item" *ngFor="let menuItem of offices"  [routerLink]="['/office', menuItem.id]" >
+                    <span>{{menuItem.address}}</span>
+                    <div class="status-dot" [style.backgroundColor]="menuItem.isActive ? 'green' : 'red'"></div>
+
+                  </a>
                 </div>
               </li>
 
               <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                <a class="nav-link" >{{'HEADER.SERVICES' | translate}}</a>
+                <a class="nav-link" routerLink="services" >{{'HEADER.SERVICES' | translate}}</a>
               </li>
               <li class="nav-item ps-4 ps-md-0 ms-0 ms-md-4">
-                <a class="nav-link" >{{'HEADER.DOCTORS' | translate}}</a>
+                <a class="nav-link" routerLink="doctors">{{'HEADER.DOCTORS' | translate}}</a>
               </li>
             </ul>
           </div>
@@ -59,7 +61,7 @@
     </a>
 </div>
     <div *ngIf="isUserAuthorize">
-    <a  class="icon-size icon-container me-4" >
+    <a  class="icon-size icon-container me-4" [routerLink]="getToManagePage">
       <i class="fa-solid fa-user"></i>
       <div  class="status-circle"></div>
     </a>
