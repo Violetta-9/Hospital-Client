@@ -7,7 +7,7 @@
         <hr class="m-0"
             style="width: 100%; display: block; border: none; border-top: 1px solid gray; position: absolute; bottom: 0; left: 0;">
       </h3>
-      <div style="text-transform: lowercase; color: gray" class="mt-0">doctor</div>
+      <div style="text-transform: lowercase; color: gray" class="mt-0">{{'TXT.DOCTOR' | translate}}</div>
     </div>
 
 
@@ -17,7 +17,7 @@
           <a>{{patient.lastName}} {{patient.firstName}} {{patient.middleName}}</a>
           <hr class="m-0"
               style="width: 100%; display: block; border: none; border-top: 1px solid gray; position: absolute;">
-          <div  class="mt-0 d-flex justify-content-start patient-title">patient</div>
+          <div  class="mt-0 d-flex justify-content-start patient-title">{{'TXT.PATIENT' | translate}}</div>
         </h3>
       </div>
 
@@ -30,33 +30,33 @@
         <hr class="m-0"
             style="width: 100%; display: block; border: none; border-top: 1px solid gray; position: absolute; bottom: 0; left: 0;">
       </h3>
-      <div style="text-transform: lowercase; color: gray" class="mt-0">service title</div>
+      <div style="text-transform: lowercase; color: gray" class="mt-0">{{'TXT.SERVICE' | translate}}</div>
     </div>
   </div>
 
 
   <form *ngIf="f?.complaints" [formGroup]="detailsForm" style="margin-top:50px;" class="col-6 mx-auto">
     <mat-form-field class="example-full-width"  [class.mat-form-field-invalid]="submitted && f.complaints?.errors">
-      <mat-label>Complaints:</mat-label>
+      <mat-label>{{'TXT.COMPLAINTS' | translate}}</mat-label>
       <textarea matInput placeholder="Enter complaints." formControlName="complaints"></textarea>
       <mat-error *ngIf="submitted && f.complaints?.errors?.required">{{'ERROR.REQUIRED' | translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width"  [class.mat-form-field-invalid]="submitted && f.conclusion?.errors">
-      <mat-label>Conclusion:</mat-label>
+      <mat-label>{{'TXT.CONCLUSION' | translate}}</mat-label>
       <textarea matInput placeholder="Enter conclusion." formControlName="conclusion"></textarea>
       <mat-error *ngIf="submitted && f.conclusion?.errors?.required">{{'ERROR.REQUIRED' | translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width"  [class.mat-form-field-invalid]="submitted && f.recomendation?.errors">
-      <mat-label>Recomendation:</mat-label>
+      <mat-label>{{'TXT.RECOMENDATION' | translate}}</mat-label>
       <textarea matInput placeholder="Enter recomendation." formControlName="recomendation"></textarea>
       <mat-error *ngIf="submitted && f.recomendation?.errors?.required">{{'ERROR.REQUIRED' | translate}}
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="save()"> Submit</button>
+    <button mat-raised-button color="primary" (click)="save()">{{'BTN.SUBMIT' |translate}}</button>
   </form>
 </div>

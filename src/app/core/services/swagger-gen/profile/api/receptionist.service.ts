@@ -170,7 +170,6 @@ export class ReceptionistService {
     public deleteReceptionistForm(accountId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
     public deleteReceptionistForm(accountId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public deleteReceptionistForm(accountId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-debugger;
 
         let headers = this.defaultHeaders;
 

@@ -4,7 +4,6 @@ import { EntityDetailsBaseComponent } from '../core/components/abstraction/entit
 import { DoctorAllDTO } from '../core/services/swagger-gen/profile';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimeSlotsGeneratorService } from '../core/services/time-slots-generator.service';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppointmentService } from '../core/services/swagger-gen/appointment';
 
 @Component({
@@ -36,9 +35,8 @@ export class RescheduleAppointmenDialog extends EntityDetailsBaseComponent imple
   }
 
   protected saveInternal(): any {
-    console.log(this.detailsForm.getRawValue())
-    const formData = this.detailsForm.value;
 
+    const formData = this.detailsForm.value;
 
     const dateString = formData.date;
     const timeString = formData.time;
@@ -56,7 +54,6 @@ export class RescheduleAppointmenDialog extends EntityDetailsBaseComponent imple
 
   updateTimeSlots(event:any) {
     this.appointmentService.getBusyTimeSlot(this.detailsForm.get("doctorId").value, new Date(event.value)).subscribe(x=>{
-      debugger
       let stringTime =  x.map<any>(y=>{
         let date = new Date(y.datesTime);
         return {hours:`${date.getHours()}`, duration: y.duration}

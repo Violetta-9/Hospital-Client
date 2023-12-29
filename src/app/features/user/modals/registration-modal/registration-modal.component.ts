@@ -5,13 +5,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../core/services/swagger-gen/authorization";
 import {passwordValidator} from "../../../../shared/validators/passwordValidator";
 import {emailValidators} from "../../../../shared/validators/emailValidator";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import { AlertService } from '../../../../services/alert-service.service';
 
 @Component({
   selector: 'app-registration-modal',
   templateUrl: './registration-modal.component.html',
-  styleUrls: ['./registration-modal.component.css']
+  styleUrls: ['./registration-modal.component.css'],
+  providers: [AlertService]
 })
 export class RegistrationModalComponent extends EntityDetailsBaseComponent implements OnInit {
   hidePassword = true
@@ -21,8 +21,7 @@ export class RegistrationModalComponent extends EntityDetailsBaseComponent imple
     public dialogRef: MatDialogRef<RegistrationModalComponent>,
     public authorizationApi: UserService,
     public dialog: MatDialog,
-    private toastr: ToastrService,
-    private translate:TranslateService
+    private alertService: AlertService
 
   ) {
     super()
@@ -51,7 +50,7 @@ export class RegistrationModalComponent extends EntityDetailsBaseComponent imple
 
 
   saveInternal() {
-    console.log(this.detailsForm.getRawValue());
+
     this.authorizationApi.registerUser(this.detailsForm.getRawValue()).subscribe(
       result =>{
         if(result){
@@ -62,8 +61,8 @@ export class RegistrationModalComponent extends EntityDetailsBaseComponent imple
     )
 
   }
-  showSuccess() {
-    this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_REGISTERED'), 'Success!');
+  async showSuccess() {
+    this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESSFULLY_REGISTERED');
   }
 
 }
