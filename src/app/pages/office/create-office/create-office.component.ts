@@ -3,8 +3,7 @@ import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/e
 import {ThemePalette} from "@angular/material/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {OfficeService} from "../../../core/services/swagger-gen/office";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import { AlertService } from '../../../services/alert-service.service';
 
 
 @Component({
@@ -15,8 +14,8 @@ import {TranslateService} from "@ngx-translate/core";
 export class CreateOfficeComponent extends EntityDetailsBaseComponent implements OnInit {
   color: ThemePalette = 'primary';
   constructor(public officeService:OfficeService,
-              private toastr: ToastrService,
-              private translate:TranslateService) {
+              private alertService: AlertService
+              ) {
     super();
     this._createForm()
   }
@@ -42,11 +41,12 @@ export class CreateOfficeComponent extends EntityDetailsBaseComponent implements
       }
     });
   }
+
   showSuccess() {
-    this.toastr.success(this.translate.instant('RESPONSE.OFFICE.SUCCSSFULLY_CREATED'), 'Success!');
+      this.alertService.showSuccess('RESPONSE.OFFICE.SUCCSSFULLY_CREATED')
   }
   showError(){
-    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
 
 }

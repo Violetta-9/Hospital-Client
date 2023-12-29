@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {DoctorService, ReceptionistService} from "../../../core/services/swagger-gen/profile";
-import dateFormat, { masks } from "dateformat";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import {DoctorService} from "../../../core/services/swagger-gen/profile";
+import dateFormat from "dateformat";
+
+import { AlertService } from '../../../services/alert-service.service';
 @Component({
   selector: 'app-create-doctor',
   templateUrl: './create-doctor.component.html',
@@ -11,8 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class CreateDoctorComponent implements OnInit {
 public userRole='doctor'
   constructor(public doctorService:DoctorService,
-              private toastr: ToastrService,
-              private translate:TranslateService) { }
+              private alertService:AlertService) { }
 
   ngOnInit(): void {
   }
@@ -30,9 +29,9 @@ public userRole='doctor'
     })
   }
   showSuccess() {
-    this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_CREATE'), 'Success!');
+     this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESSFULLY_CREATE')
   }
   showError(){
-  this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
 }

@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {TimeSlotsGeneratorService} from "../core/services/time-slots-generator.service";
+import {TimeSlotsGeneratorService} from "../../../core/services/time-slots-generator.service";
 import { FormBuilder, Validators } from '@angular/forms';
-import { EntityDetailsBaseComponent } from '../core/components/abstraction/entity-detail-base.component';
-import { OfficeService } from '../core/services/swagger-gen/office';
-import { SpecializationService } from '../core/services/swagger-gen/specialization';
-import { ServiceService } from '../core/services/swagger-gen/service';
+import { EntityDetailsBaseComponent } from '../../../core/components/abstraction/entity-detail-base.component';
+import { OfficeService } from '../../../core/services/swagger-gen/office';
+import { SpecializationService } from '../../../core/services/swagger-gen/specialization';
+import { ServiceService } from '../../../core/services/swagger-gen/service';
 import {
   DoctorService,
   PatientAllDTO,
   PatientService,
   ReceptionistService
-} from '../core/services/swagger-gen/profile';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { AppointmentService } from '../core/services/swagger-gen/appointment';
-import * as moment from 'moment/moment';
+} from '../../../core/services/swagger-gen/profile';
+import { AppointmentService } from '../../../core/services/swagger-gen/appointment';
+import { AlertService } from '../../../services/alert-service.service';
+
 
 
 @Component({
@@ -44,7 +44,8 @@ export class CreateAppointmentComponent extends EntityDetailsBaseComponent imple
               private readonly doctorService:DoctorService,
               private readonly patientService:PatientService,
               private readonly receptionistService:ReceptionistService,
-              private readonly appointmentService:AppointmentService){
+              private readonly appointmentService:AppointmentService,
+              private readonly alertService:AlertService){
     super();
     this.originalTimeSlots = this.timeSlotsGeneratorService.generateTimeSlots('08:00', '18:00', 60);
     this.timeSlots = this.originalTimeSlots;
@@ -100,13 +101,9 @@ this.getSpecialization();
         this.isPatient = true
       }
       if(rolesArray.includes('Receptionist')){
-       // this.receptionistService.getReceptionistById(+this.patientId).subscribe(x=>this.patient=x);
         this.patientService.getAllPatients().subscribe(x=>this.patients = x)
         this.isPatient = false
       }
-      // if(rolesArray.includes('Doctor')){
-      //   this.doctorService.getDoctorById(+this.patientId).subscribe(x=>this.patient=x)
-      // }
     }
   }
   protected saveInternal() {
@@ -125,7 +122,14 @@ this.getSpecialization();
   +formData.fifthFormGroup.patientId,
   formData.secondFormGroup.serviceId,
   formData.secondFormGroup.specializationId,
-  formData.firstFormGroup.officeId, new Date(dateObject)).subscribe(x=>console.log(x))
+  formData.firstFormGroup.officeId, new Date(dateObject)).subscribe(x=>{
+    if(x>0){
+      this.showSuccess();
+    }
+    else{
+      this.showError();
+    }
+    })
 
   }
 
@@ -148,16 +152,22 @@ this.getSpecialization();
       })
       this.timeSlots = this.originalTimeSlots.filter(timeSlot => {
 
-        let time = new Date();
-
         return !stringTime.some(busySlot => {
           if(busySlot.duration > 1){
-            debugger
+
             stringTime.push({hours: `${+busySlot.hours + 1}`,duration: 1})
           }
          return  timeSlot.split(":")[0] === busySlot.hours});
       });
 
     })
+  }
+
+  showSuccess() {
+      this.alertService.showSuccess('RESPONSE.APPOINTMENT.SUCCESSFULLY_CREATED')
+  }
+
+  showError(){
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
 }
