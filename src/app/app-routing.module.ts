@@ -4,7 +4,6 @@ import {CreateDoctorComponent} from "./pages/doctor/create-doctor/create-doctor.
 import {CreateReceptionistComponent} from "./pages/receptionist/create-receptionist/create-receptionist.component";
 import {CreateOfficeComponent} from "./pages/office/create-office/create-office.component";
 import {CreateServiceComponent} from "./pages/services/create-service/create-service.component";
-import {ProfileComponent} from "./features/form/profile/profile.component";
 import {
   CreateSpecializationComponent
 } from "./pages/specialization/create-specialization/create-specialization.component";
@@ -26,7 +25,7 @@ import {ServicePageComponent} from "./pages/services/service-page/service-page.c
 import {HomePatientPageComponent} from "./pages/patient/home-patient-page/home-patient-page.component";
 import {CreatePatientComponent} from "./pages/patient/create-patient/create-patient.component";
 import {HomeManagementPageComponent} from "./pages/receptionist/home-management-page/home-management-page.component";
-import {CreateAppointmentComponent} from "./create-appointment/create-appointment.component";
+import {CreateAppointmentComponent} from "./pages/appointment/create-appointment/create-appointment.component";
 import { HomeAppointmentPageComponent } from './home-appointment-page/home-appointment-page.component';
 import { ResultPageComponent } from './result-page/result-page.component';
 import { AuthReceptionistGuard } from './guards/auth.receptionist.guards';

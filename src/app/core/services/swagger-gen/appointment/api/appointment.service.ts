@@ -24,7 +24,7 @@ import { BusyTimeSlotsDto } from '../model/busyTimeSlotsDto';
 import { CreateAppointmentResultDto } from '../model/createAppointmentResultDto';
 import { Response } from '../model/response';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { BASE_PATH }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
@@ -289,9 +289,9 @@ export class AppointmentService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'body', reportProgress?: boolean): Observable<Array<AppointmentHistoryDTO>>;
-    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AppointmentHistoryDTO>>>;
-    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AppointmentHistoryDTO>>>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'body', reportProgress?: boolean): Observable<Response>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Response>>;
+    public createAppointmentResult(body?: CreateAppointmentResultDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Response>>;
     public createAppointmentResult(body?: CreateAppointmentResultDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -326,7 +326,7 @@ export class AppointmentService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Array<AppointmentHistoryDTO>>('post',`${this.basePath}/api/Appointment/result`,
+        return this.httpClient.request<Response>('post',`${this.basePath}/api/Appointment/result`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -380,9 +380,7 @@ export class AppointmentService {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
+
 
         return this.httpClient.request<Array<AppointmentScheduleForDoctorDTO>>('get',`${this.basePath}/api/Appointment/doctor`,
             {
