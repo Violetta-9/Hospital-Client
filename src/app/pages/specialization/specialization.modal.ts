@@ -13,7 +13,6 @@ import {MatTableModule} from "@angular/material/table";
 import {HomeSpecializationPageComponent} from "./home-specialization-page/home-specialization-page.component";
 import {MatRadioModule} from "@angular/material/radio";
 import {SpecializationPageComponent} from "./specialization-page/specialization-page.component";
-import {AppModule} from "../../app.module";
 import {MatIconModule} from "@angular/material/icon";
 
 
@@ -35,7 +34,6 @@ import {MatIconModule} from "@angular/material/icon";
     MatSelectModule,
     MatInputModule,
     MatTableModule,
-    AppModule,
     MatIconModule,
     FormsModule,
     MatRadioModule
