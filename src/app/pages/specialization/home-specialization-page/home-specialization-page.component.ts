@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
-import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-specialization-page',
@@ -28,10 +28,7 @@ export class HomeSpecializationPageComponent implements OnInit {
   }
 
   linkTo(row) {
-    this.router.navigate(['specialization'], { queryParams: { id: row.id } });
-
-    console.log(row)
-    console.log(row.id)
+    this.router.navigate(['specialization'], { queryParams: { id: row.id } })
   }
 
   createSpecialization() {

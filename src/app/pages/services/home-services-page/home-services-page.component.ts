@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceService} from "../../../core/services/swagger-gen/service";
-import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
+import { ServiceService } from "../../../core/services/swagger-gen/service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-home-services-page',
@@ -8,9 +8,10 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
   styleUrls: ['./home-services-page.component.css']
 })
 export class HomeServicesPageComponent implements OnInit {
-  displayedColumns: string[] = ['title','price', 'isActive','serviceCategoryName'];
+  displayedColumns: string[] = ['title', 'price', 'isActive', 'serviceCategoryName'];
   dataSource;
-  constructor(public serviceService:ServiceService,
+
+  constructor(public serviceService: ServiceService,
               private router: Router,
               private route: ActivatedRoute) {
     this.getAllService();
@@ -21,17 +22,14 @@ export class HomeServicesPageComponent implements OnInit {
   }
 
   private getAllService() {
-    this.serviceService.getAllServices().subscribe(x=>this.dataSource=x);
+    this.serviceService.getAllServices().subscribe(x => this.dataSource = x);
   }
+
   linkTo(row) {
-
-    this.router.navigate(['/service'], { queryParams: { id: row.id } });
-
-    console.log(row)
-    console.log(row.id)
+    this.router.navigate(['/service'], {queryParams: {id: row.id}});
   }
 
   createPatient() {
-    this.router.navigate(['../../service/create'], {relativeTo:this.route });
+    this.router.navigate(['../../service/create'], {relativeTo: this.route});
   }
 }

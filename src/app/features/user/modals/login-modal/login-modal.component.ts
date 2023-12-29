@@ -4,13 +4,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../../core/services/swagger-gen/authorization";
 import jwt_decode from "jwt-decode";
-import {ToastrService} from "ngx-toastr";
 import {DoctorService, PatientService, ReceptionistService} from "../../../../core/services/swagger-gen/profile";
 import {
   SearchConditionBase,
   SearchConditionCacheService
 } from "../../../../core/services/search-condition-cache-service";
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../services/alert-service.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -23,7 +23,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
   constructor(public dialogRef: MatDialogRef<LoginModalComponent>,
               public dialog: MatDialog,
               public authorizationApi: UserService,
-              private toastr: ToastrService,
+              private alertService: AlertService,
               private doctorService:DoctorService,
               private receptionistService:ReceptionistService,
               private patientService:PatientService,
@@ -59,7 +59,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           localStorage.setItem('token', x);
           // @ts-ignore
           localStorage.setItem('role', f.role);
-          this.showSuccessForReceptionist()
+          this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESS_LOGIN', {role:'Receptionist'})
           // @ts-ignore
           this.receptionistService.getReceptionistIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
@@ -71,7 +71,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           localStorage.setItem('token', x);
           // @ts-ignore
           localStorage.setItem('role', f.role);
-          this.showSuccessForDoctor();
+          this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESS_LOGIN', {role:'Doctor'})
           // @ts-ignore
           this.doctorService.getDoctorIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
@@ -83,7 +83,7 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           localStorage.setItem('token', x);
           // @ts-ignore
           localStorage.setItem('role', f.role);
-          this.showSuccessForPatient();
+          this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESS_LOGIN', {role:'Patient'})
           // @ts-ignore
           this.patientService.getPatientIdByAccountId(f.nameid).subscribe(s=> localStorage.setItem('id', s));
           this.searchConditionCacheService.remove(this.key);
@@ -94,23 +94,13 @@ export class LoginModalComponent extends EntityDetailsBaseComponent implements O
           localStorage.setItem('token', x);
           // @ts-ignore
           localStorage.setItem('role', f.role);
-          this.showSuccessForUser();
+          this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESS_LOGIN', {role:'User'})
+
         }
 
         }
-    },error => console.log(111)) //todo
+    });
   }
-  showSuccessForDoctor() {
-    this.toastr.success('You have successfully logged in to your account as Doctor', 'Success!');
-  }
-  showSuccessForReceptionist() {
-    this.toastr.success('You have successfully logged in to your account as Receptionist', 'Success!');
-  }
-  showSuccessForPatient() {
-    this.toastr.success('You have successfully logged in to your account as Patient', 'Success!');
-  }
-  showSuccessForUser() {
-    this.toastr.success('You have successfully logged in to your account as User', 'Success!');
-  }
+
 }
 

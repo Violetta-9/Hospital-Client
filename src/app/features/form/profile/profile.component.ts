@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { EntityDetailsBaseComponent } from "../../../core/components/abstraction/entity-detail-base.component";
-import { emailValidators } from "../../../shared/validators/emailValidator";
+
 import {
-  DoctorService, IAppointmentForPatientDto, IResultDto,
-  IResultForPatient,
-  IServiceForPatientResultDto,
+  DoctorService,
   StatusService
 } from "../../../core/services/swagger-gen/profile";
 import { MatSelectChange } from "@angular/material/select";
@@ -13,10 +11,12 @@ import { AddImageToAvatarService } from "../../../core/services/manage-photo/add
 import { MatDialog } from "@angular/material/dialog";
 import { DeleteConfirmComponent } from "../../../shared/modals/delete-confirm/delete-confirm.component";
 import { DeletePersonService } from "../../../core/services/manage-delete/delete-person.service";
-import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { AppointmentService } from '../../../core/services/swagger-gen/appointment';
 import { RescheduleAppointmenDialog } from '../../../reschedule-appointment/reschedule-appointment.component';
+
+import { AlertService } from '../../../services/alert-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -74,10 +74,10 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
               public doctorService: DoctorService,
               public addImageToAvatar: AddImageToAvatarService,
               public dialog: MatDialog,
-              public deletePersonService: DeletePersonService, private readonly appointmentService: AppointmentService) {
+              public deletePersonService: DeletePersonService,
+              private readonly appointmentService: AppointmentService,
+              private readonly alertService:AlertService) {
     super();
-
-    this.getStatuses();
   }
 
   ngOnInit(): void {
@@ -86,6 +86,8 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
     if (this.userRole == 'patient') {
       this.dataSource.data = this.profileUser?.results;
       this.appointmentService.getAppointmentListForPatient(+localStorage.getItem('id')).subscribe(x => this.dataSourceTable = x);
+    }else{
+      this.getStatuses();
     }
     this._createForm();
 
@@ -133,13 +135,10 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       data: {element},
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.deletePersonService.DeletePerson(result);
       }
-
     });
 
   }
@@ -154,10 +153,21 @@ export class ProfileComponent extends EntityDetailsBaseComponent implements OnIn
             patientId: +localStorage.getItem('id')
           }
         }).afterClosed().subscribe(result => {
-         this.dataSourceTable = [...result];
-
+          if(result){
+            this.showSuccess()
+            this.dataSourceTable = [...result];
+          }
+          else {
+            this.showError()
+          }
         });
       });
+  }
+  showSuccess() {
+      this.alertService.showSuccess('RESPONSE.APPOINTMENT.SUCCESSFULLY_RESCHEDULE')
+  }
+  showError(){
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
 }
 
