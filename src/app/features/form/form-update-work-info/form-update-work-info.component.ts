@@ -43,9 +43,7 @@ public editWorkInfo=true;
   }
 
   protected saveInternal(): any {
-
     this.detailsForm.addControl("accountId", new FormControl(this.userProfile.accountId));
-    console.log(this.detailsForm.getRawValue())
     this.workDataForUpdating.emit(this.detailsForm.getRawValue())
   }
   private getAllOffices() {

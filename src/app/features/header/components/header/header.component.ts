@@ -19,17 +19,13 @@ export class HeaderComponent implements OnInit {
     this.officeService.getAllOffices().subscribe(x=>this.offices = x)
   }
   openLoginDialog(){
-    console.log("op Work")
     const dialogRef = this.dialog.open(LoginModalComponent);
-    console.log("op Work end")
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
+    dialogRef.afterClosed().subscribe(_ => {
     });
   }
   openRegistrationDialog(){
     const dialogRef = this.dialog.open(RegistrationModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(_ => {
     });
   }
   public get isUserAuthorize(){

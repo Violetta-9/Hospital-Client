@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ReceptionistService} from "../../../core/services/swagger-gen/profile";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteConfirmComponent} from "../../../shared/modals/delete-confirm/delete-confirm.component";
 
 @Component({
   selector: 'app-home-receptionist-page',
@@ -27,11 +26,7 @@ export class HomeReceptionistPageComponent implements OnInit {
 
 
     linkTo(row) {
-debugger
       this.router.navigate(['../../receptionist/profile'], { relativeTo:this.route ,queryParams: { id: row.id }});
-
-      console.log(row)
-      console.log(row.id)
     }
 
 

@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {emailValidators} from "../../../shared/validators/emailValidator";
-import {OfficeService} from "../../../core/services/swagger-gen/office";
-import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {AddImageToAvatarService} from "../../../core/services/manage-photo/add-image-to-avatar.service";
 
@@ -81,8 +78,6 @@ public editPersonalInfo=true;
   }
 
   protected saveInternal(): any {
-    console.log(this.f.file.value)
-console.log( this.detailsForm.get('file').value)
     this.detailsForm.get('file').setValue(this.fileToReturn);
 
     this.detailsForm.addControl("accountId", new FormControl(this.userProfile.accountId));

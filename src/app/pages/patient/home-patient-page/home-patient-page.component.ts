@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PatientService} from "../../../core/services/swagger-gen/profile";
-import {DeleteConfirmComponent} from "../../../shared/modals/delete-confirm/delete-confirm.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -23,9 +22,6 @@ export class HomePatientPageComponent implements OnInit {
 
   linkTo(row) {
     this.router.navigate(['../../patient/profile'], {relativeTo:this.route, queryParams: { id: row.id } });
-
-    console.log(row)
-    console.log(row.id)
   }
 
   private getAllPatients() {
