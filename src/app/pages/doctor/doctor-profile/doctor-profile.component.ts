@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {DoctorService, UpdateAccountInfoDTO, UpdateService} from "../../../core/services/swagger-gen/profile";
+import {DoctorService, UpdateService} from "../../../core/services/swagger-gen/profile";
 import {ActivatedRoute} from "@angular/router";
 import {DeletePersonService} from "../../../core/services/manage-delete/delete-person.service";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import { AlertService } from '../../../services/alert-service.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -18,10 +17,7 @@ public doctor;
               public updateService:UpdateService,
               private route: ActivatedRoute,
               public deletePersonService:DeletePersonService,
-              private toastr: ToastrService,
-              private translate:TranslateService) {
-
-
+              private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -32,10 +28,10 @@ public doctor;
         }
       );
     this.doctorService.getDoctorById(this.idFromQuery).subscribe(x=>this.doctor=x);
-    this.deletePersonService.deletePersonTrigger.subscribe(x=> {
+    this.deletePersonService.deletePersonTrigger.subscribe(_=> {
       this.doctorService.deleteDoctor(`"${this.doctor.accountId}"`).subscribe(s => {
         if(s.isSuccess){
-          this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCSSFULLY_DELETE',{name:this.doctor.firstName}))
+          this.alertService.showSuccess('RESPONSE.PROFILE.SUCCSSFULLY_DELETE',{name:this.doctor.firstName})
         }
       })
     });
@@ -45,7 +41,7 @@ public doctor;
   update($event: any) {
      this.updateService.updateProfile($event).subscribe(x=>{
        if(x.isSuccess){
-         this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_PERSONAL_INFO',{name:this.doctor.firstName}))
+         this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_PERSONAL_INFO',{name:this.doctor.firstName})
        }
      })
   }
@@ -53,7 +49,7 @@ public doctor;
   updateWorkInfo($event: any) {
     this.doctorService.updateDoctorProfile($event).subscribe(x=>{
       if(x.isSuccess){
-        this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_WORK_INFO',{name:this.doctor.firstName}))
+        this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_WORK_INFO',{name:this.doctor.firstName})
       }
     });
   }
@@ -62,7 +58,7 @@ public doctor;
   changeStatus($event: any) {
     this.doctorService.updateStatusForm($event.value,this.doctor.accountId).subscribe(x=>{
       if(x.isSuccess){
-        this.toastr.success(this.translate.instant('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_STATUS',{name:this.doctor.firstName}))
+        this.alertService.showSuccess('RESPONSE.PROFILE.SUCCESSFULLY_UPDATE_STATUS',{name:this.doctor.firstName})
       }
     })
   }

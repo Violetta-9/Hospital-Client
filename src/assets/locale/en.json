@@ -26,13 +26,14 @@
       "SUCCESSFULLY_UPDATE_STATUS": "'Office status has been successfully updated"
     },
     "PROFILE": {
-      "SUCCESSFULLY_REGISTERED": "You has registered successfully.Check your email email",
+      "SUCCESSFULLY_REGISTERED": "You has registered successfully.Check your email",
       "SUCCESSFULLY_CREATE": "Profile has been successfully created",
       "SUCCESSFULLY_UPDATE_PERSONAL_INFO": "'{{ name }}''s personal information has been successfully updated",
       "SUCCESSFULLY_UPDATE_WORK_INFO": "'{{ name }}''s work information has been successfully updated",
       "SUCCESSFULLY_UPDATE_STATUS": "'{{ name }}''s status has been successfully updated",
       "SUCCESSFULLY_DELETE": "'{{ name }}''s profile has been successfully deleted",
-      "SUCCESSFULLY_APPROVED": "'{{ name }}' was created succesfull"
+      "SUCCESSFULLY_APPROVED": "'{{ name }}' was created succesfull",
+      "SUCCESS_LOGIN": "You have successfully logged in to your account as {{ role }}"
     },
     "SERVICE": {
       "SUCCESSFULLY_CREATED": "Service was created successfully",
@@ -45,10 +46,33 @@
       "SUCCESSFULLY_DELETE": "Specialization has been successfully deleted",
       "SUCCESSFULLY_UPDATE": "Specialization has been successfully updated",
       "SUCCESSFULLY_UPDATE_STATUS": "Specialization status has been successfully updated"
+    },
+    "APPOINTMENT": {
+      "SUCCESSFULLY_CREATED": "Appointment was created successfully",
+      "SUCCESSFULLY_RESCHEDULE": "Appointment was rescheduled successfully",
+      "SUCCESS_RESULT": "The result created success",
+      "BAD_RESULT": "Ooops.Something went wrong.Try again.Or write to support"
     }
 
-  }
-
-
+  },
+"TXT": {
+  "DOCTOR": "Doctor",
+  "PATIENT": "Patient",
+  "SPECIALIZATION": "Specialization",
+  "SERVICE": "Service",
+  "SERVICES": "Services",
+  "RESULT": "Result",
+  "COMPLAINTS": "Complaints:",
+  "CONCLUSION": "Conclusion:",
+  "RECOMENDATION": "Recomendation:"
+},
+"BTN": {
+  "SUBMIT": "Submit"
+},
+  "TAB":{
+  "TITLE": "Title",
+    "PRICE": "Price",
+    "CATEGORY": "Category"
+}
 
 }

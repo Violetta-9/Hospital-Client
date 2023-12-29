@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServiceCategoriesDTO, ServiceService} from "../../../core/services/swagger-gen/service";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import { AlertService } from '../../../services/alert-service.service';
 
 @Component({
   selector: 'app-create-service',
@@ -13,8 +12,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class CreateServiceComponent extends EntityDetailsBaseComponent implements OnInit {
 public servicesCategoriesList:ServiceCategoriesDTO[]
   constructor(public service:ServiceService,
-              private toastr: ToastrService,
-              private translate:TranslateService) {
+              private alertService: AlertService) {
     super();
 this.getServicesCategories();
     this._createForm()
@@ -44,12 +42,10 @@ this.getServicesCategories();
       }
     });
   }
-
-
   showSuccess() {
-    this.toastr.success(this.translate.instant('RESPONSE.SERVICE.SUCCESSFULLY_CREATED'), 'Success!');
+      this.alertService.showSuccess('RESPONSE.SERVICE.SUCCESSFULLY_CREATED')
   }
   showError(){
-    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
 }

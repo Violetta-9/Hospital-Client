@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {EntityDetailsBaseComponent} from "../../../core/components/abstraction/entity-detail-base.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatTableDataSource} from "@angular/material/table";
-import {OutServicesDto, ServiceService} from "../../../core/services/swagger-gen/service";
-import {MatSelectChange} from "@angular/material/select";
+import {ServiceService} from "../../../core/services/swagger-gen/service";
 import {MatOptionSelectionChange} from "@angular/material/core";
-import {ActivatedRoute} from "@angular/router";
 import {SpecializationService} from "../../../core/services/swagger-gen/specialization";
-import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
 import { EmptyService } from '../../../core/services/swagger-gen/service/model/emptyService';
+import { AlertService } from '../../../services/alert-service.service';
 
 @Component({
   selector: 'app-create-specialization',
@@ -23,8 +19,7 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
   dataSource=[];
   constructor(public service:ServiceService,
               public specialization:SpecializationService,
-              private toastr: ToastrService,
-              private translate:TranslateService) {
+              private alertService: AlertService) {
     super();
     this._createForm();
     this.getAllServices();
@@ -54,9 +49,9 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
     if($event.source.selected){
       this.dataSource=[...this.dataSource,{id: id,title: title }]
     }else{
-      console.log(id);
+
       var a=this.dataSource.find(x=>x.id==id);
-      console.log(a);
+
 
       if(a!=undefined){
         var i=this.dataSource.indexOf(a);
@@ -80,14 +75,12 @@ export class CreateSpecializationComponent  extends EntityDetailsBaseComponent i
     })
   }
 
-
   showSuccess() {
-    this.toastr.success(this.translate.instant('RESPONSE.SPECIALIZATION.SUCCESSFULLY_CREATED'), 'Success!');
+      this.alertService.showSuccess('RESPONSE.SPECIALIZATION.SUCCESSFULLY_CREATED')
   }
   showError(){
-    this.toastr.error(this.translate.instant('ERROR.ERROR_MESSAGES'),'Error:(')
+      this.alertService.showError('ERROR.ERROR_MESSAGES')
   }
-
 
 }
 
